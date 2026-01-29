@@ -34,7 +34,7 @@ export const WebCommand = cmd({
   describe: "start bloxycode server and open web interface",
   handler: async (args) => {
     if (!Flag.BLOXYCODE_SERVER_PASSWORD) {
-      UI.println(UI.Style.TEXT_WARNING_BOLD + "!  " + "OPENCODE_SERVER_PASSWORD is not set; server is unsecured.")
+      UI.println(UI.Style.TEXT_WARNING_BOLD + "!  " + "BLOXYCODE_SERVER_PASSWORD is not set; server is unsecured.")
     }
     const opts = await resolveNetworkOptions(args)
     const server = Server.listen(opts)

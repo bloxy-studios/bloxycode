@@ -53,8 +53,9 @@ export namespace BloxyParser {
   /**
    * Parse markdown PRD with checkbox format
    * Supports:
-   * - [ ] task title
+   * - [ ] task title (pending)
    * - [x] completed task (skipped)
+   * - [~] deferred task (included but skipped during execution)
    * ## Task: title
    */
   function parseMarkdown(content: string): BloxyState.Task[] {
@@ -68,8 +69,8 @@ export namespace BloxyParser {
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]
 
-      // Check for checkbox format: - [ ] task or - [x] task
-      const checkboxMatch = line.match(/^[-*]\s*\[([ xX])\]\s*(.+)$/)
+      // Check for checkbox format: - [ ] task, - [x] task, or - [~] task
+      const checkboxMatch = line.match(/^[-*]\s*\[([ xX~])\]\s*(.+)$/)
       if (checkboxMatch) {
         // Save previous task
         if (currentTask) {
@@ -77,10 +78,26 @@ export namespace BloxyParser {
           tasks.push(BloxyState.Task.parse(currentTask))
         }
 
-        const isCompleted = checkboxMatch[1].toLowerCase() === "x"
+        const marker = checkboxMatch[1].toLowerCase()
         const title = checkboxMatch[2].trim()
 
-        if (!isCompleted) {
+        if (marker === "x") {
+          // Completed task - skip entirely
+          currentTask = null
+          bodyLines = []
+        } else if (marker === "~") {
+          // Deferred task - include but mark as deferred
+          taskIndex++
+          currentTask = {
+            id: `task-${taskIndex}`,
+            title,
+            status: "deferred",
+            attempts: 0,
+            time: {},
+          }
+          bodyLines = []
+        } else {
+          // Pending task
           taskIndex++
           currentTask = {
             id: `task-${taskIndex}`,
@@ -89,9 +106,6 @@ export namespace BloxyParser {
             attempts: 0,
             time: {},
           }
-          bodyLines = []
-        } else {
-          currentTask = null
           bodyLines = []
         }
         continue

@@ -1,0 +1,15 @@
+Resume the Bloxy session from the last pending or failed task.
+
+If $1 is "--skip-failed", skip any failed tasks and continue with the next pending task.
+
+Steps:
+1. Load the session state from .bloxycode/bloxy-state.json
+2. If no session exists, inform the user
+3. Find the first actionable task:
+   - With --skip-failed: Find first "pending" task
+   - Without flag: Find first "pending" or "failed" task (for retry)
+4. Set the session status to "running"
+5. Begin executing from that task
+6. Display which task is being resumed
+
+If all tasks are already completed, inform the user that there's nothing to resume.

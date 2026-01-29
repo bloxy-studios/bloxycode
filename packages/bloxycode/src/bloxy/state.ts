@@ -10,7 +10,7 @@ export namespace BloxyState {
     id: z.string(),
     title: z.string(),
     body: z.string().optional(),
-    status: z.enum(["pending", "in_progress", "completed", "failed"]),
+    status: z.enum(["pending", "in_progress", "completed", "failed", "deferred"]),
     attempts: z.number().default(0),
     error: z.string().optional(),
     summary: z.string().optional(),
@@ -95,7 +95,21 @@ export namespace BloxyState {
 
   export function getNextPendingTask(session: Session): Task | null {
     for (let i = session.currentTaskIndex; i < session.tasks.length; i++) {
-      if (session.tasks[i].status === "pending" || session.tasks[i].status === "in_progress") {
+      const status = session.tasks[i].status
+      if (status === "pending" || status === "in_progress") {
+        return session.tasks[i]
+      }
+    }
+    return null
+  }
+
+  export function getNextActionableTask(session: Session, skipFailed = false): Task | null {
+    for (let i = 0; i < session.tasks.length; i++) {
+      const status = session.tasks[i].status
+      if (status === "pending" || status === "in_progress") {
+        return session.tasks[i]
+      }
+      if (!skipFailed && status === "failed") {
         return session.tasks[i]
       }
     }
@@ -112,6 +126,10 @@ export namespace BloxyState {
 
   export function countFailed(session: Session): number {
     return session.tasks.filter(t => t.status === "failed").length
+  }
+
+  export function countDeferred(session: Session): number {
+    return session.tasks.filter(t => t.status === "deferred").length
   }
 
   export async function markInProgress(worktree: string, session: Session, taskId: string): Promise<Session> {

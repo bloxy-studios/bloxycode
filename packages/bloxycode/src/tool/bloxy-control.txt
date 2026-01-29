@@ -1,0 +1,13 @@
+Signal task completion or failure in Bloxy autonomous mode.
+
+Use this tool to:
+- Signal that the current task has been completed successfully
+- Signal that the current task has failed
+- Request test execution
+
+Actions:
+- `task_complete`: Mark the current task as complete. Include a brief `summary` of what was accomplished.
+- `task_failed`: Mark the current task as failed. Include the `error` message describing what went wrong.
+- `run_tests`: Request that tests be run (if configured).
+
+This tool is only available when operating in Bloxy mode (autonomous task execution). After calling task_complete or task_failed, the system will automatically advance to the next task or complete the session.

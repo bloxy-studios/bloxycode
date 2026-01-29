@@ -5,6 +5,7 @@ import { Instance } from "../project/instance"
 import { Identifier } from "../id/id"
 import PROMPT_INITIALIZE from "./template/initialize.txt"
 import PROMPT_REVIEW from "./template/review.txt"
+import PROMPT_BLOXY from "./template/bloxy.txt"
 import { MCP } from "../mcp"
 
 export namespace Command {
@@ -53,6 +54,7 @@ export namespace Command {
   export const Default = {
     INIT: "init",
     REVIEW: "review",
+    BLOXY: "bloxy",
   } as const
 
   const state = Instance.state(async () => {
@@ -75,6 +77,15 @@ export namespace Command {
         },
         subtask: true,
         hints: hints(PROMPT_REVIEW),
+      },
+      [Default.BLOXY]: {
+        name: Default.BLOXY,
+        description: "start autonomous task execution from PRD file [path], defaults to PRD.md",
+        agent: "bloxy",
+        get template() {
+          return PROMPT_BLOXY
+        },
+        hints: hints(PROMPT_BLOXY),
       },
     }
 

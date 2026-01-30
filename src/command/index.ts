@@ -6,6 +6,11 @@ import { Identifier } from "../id/id"
 import PROMPT_INITIALIZE from "./template/initialize.txt"
 import PROMPT_REVIEW from "./template/review.txt"
 import PROMPT_BLOXY from "./template/bloxy.txt"
+import PROMPT_BLOXY_INIT from "./template/bloxy-init.txt"
+import PROMPT_BLOXY_CONFIG from "./template/bloxy-config.txt"
+import PROMPT_BLOXY_RULE from "./template/bloxy-rule.txt"
+import PROMPT_BLOXY_GH from "./template/bloxy-gh.txt"
+import PROMPT_BLOXY_BROWSER from "./template/bloxy-browser.txt"
 import PROMPT_BLOXY_STATUS from "./template/bloxy-status.txt"
 import PROMPT_BLOXY_RESUME from "./template/bloxy-resume.txt"
 import PROMPT_BLOXY_VALIDATE from "./template/bloxy-validate.txt"
@@ -58,6 +63,11 @@ export namespace Command {
     INIT: "init",
     REVIEW: "review",
     BLOXY: "bloxy",
+    BLOXY_INIT: "bloxy-init",
+    BLOXY_CONFIG: "bloxy-config",
+    BLOXY_RULE: "bloxy-rule",
+    BLOXY_GH: "bloxy-gh",
+    BLOXY_BROWSER: "bloxy-browser",
     BLOXY_STATUS: "bloxy-status",
     BLOXY_RESUME: "bloxy-resume",
     BLOXY_VALIDATE: "bloxy-validate",
@@ -92,6 +102,46 @@ export namespace Command {
           return PROMPT_BLOXY
         },
         hints: hints(PROMPT_BLOXY),
+      },
+      [Default.BLOXY_INIT]: {
+        name: Default.BLOXY_INIT,
+        description: "initialize a new Bloxy PRD file",
+        get template() {
+          return PROMPT_BLOXY_INIT.replace("${path}", Instance.worktree)
+        },
+        hints: hints(PROMPT_BLOXY_INIT),
+      },
+      [Default.BLOXY_CONFIG]: {
+        name: Default.BLOXY_CONFIG,
+        description: "show current Bloxy configuration",
+        get template() {
+          return PROMPT_BLOXY_CONFIG
+        },
+        hints: [],
+      },
+      [Default.BLOXY_RULE]: {
+        name: Default.BLOXY_RULE,
+        description: "add a rule to Bloxy configuration [rule]",
+        get template() {
+          return PROMPT_BLOXY_RULE
+        },
+        hints: hints(PROMPT_BLOXY_RULE),
+      },
+      [Default.BLOXY_GH]: {
+        name: Default.BLOXY_GH,
+        description: "create PRD from GitHub issues [repo]",
+        get template() {
+          return PROMPT_BLOXY_GH
+        },
+        hints: hints(PROMPT_BLOXY_GH),
+      },
+      [Default.BLOXY_BROWSER]: {
+        name: Default.BLOXY_BROWSER,
+        description: "configure browser capabilities [on|off|auto]",
+        get template() {
+          return PROMPT_BLOXY_BROWSER
+        },
+        hints: hints(PROMPT_BLOXY_BROWSER),
       },
       [Default.BLOXY_STATUS]: {
         name: Default.BLOXY_STATUS,

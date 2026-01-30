@@ -1,0 +1,12 @@
+Configure browser automation capabilities.
+
+Argument: $ARGUMENTS (expected: "on", "off", "auto", "true", "false")
+
+1. Read `.bloxycode/bloxycode.json`.
+2. Update `capabilities.browser` based on the argument:
+   - "on", "true" -> "true"
+   - "off", "false" -> "false"
+   - "auto" -> "auto"
+   - If no argument is provided, display the current setting.
+3. Save the configuration.
+4. Inform the user of the updated setting.

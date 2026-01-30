@@ -1,0 +1,7 @@
+Read the project configuration file (`.bloxycode/bloxycode.json` or `.bloxycode/bloxycode.jsonc`).
+
+If it doesn't exist, inform the user that the project is not configured and suggest running `/bloxy-init`.
+
+If it exists:
+1. Display the file content in a readable format.
+2. Specifically highlight the active `rules` and `capabilities`.

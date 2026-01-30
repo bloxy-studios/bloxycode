@@ -1,0 +1,23 @@
+Create a PRD from GitHub Issues.
+
+Repository: $ARGUMENTS (e.g., owner/repo)
+
+1. Verify the `gh` CLI tool is available.
+2. Use `gh issue list --repo $ARGUMENTS --state open --limit 20 --json number,title,body` to fetch issues.
+3. Create (or overwrite) `PRD.md` with the following content:
+
+   ```markdown
+   # Project Requirements Document (from GitHub)
+
+   ## Overview
+   Tasks imported from $ARGUMENTS
+
+   ## Tasks
+   ```
+
+4. For each issue fetched, append a task entry:
+   `- [ ] #<number> <title>`
+
+5. If the body of the issue is not empty, include it as a comment or sub-description indented under the task.
+
+Report back the number of issues imported into the PRD.

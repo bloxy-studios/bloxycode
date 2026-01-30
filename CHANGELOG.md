@@ -5,7 +5,20 @@ All notable changes to BloxyCode will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2025-01-30
+## [1.0.1] - 2026-01-30
+
+### Fixed
+- **ES Module Runtime Error**: Fixed `bin/bloxycode` to use ES module syntax (`import` instead of `require`), resolving the "ReferenceError: require is not defined in ES module scope" error when running globally installed package
+- **Peer Dependency Warnings**: Resolved npm peer dependency warnings by:
+  - Adding `resolutions` field to force consistent versions across all packages
+  - Updated `@hono/standard-validator` from `0.1.5` to `^0.2.0` to match `hono-openapi` requirements
+  - Forced `zod@4.1.8` and `quansync@^1.0.0` for all dependencies to eliminate version conflicts
+
+### Changed
+- Package now installs cleanly without peer dependency warnings
+- Global installation (`npm install -g @bloxystudios/bloxycode`) now works correctly
+
+## [1.0.0] - 2026-01-30
 
 ### Added
 - **Bloxy Mode**: Autonomous task execution from PRD files

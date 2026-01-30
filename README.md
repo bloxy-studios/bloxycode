@@ -1,6 +1,6 @@
 # BloxyCode
 
-[![Version](https://img.shields.io/badge/Version-1.0.4-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
+[![Version](https://img.shields.io/badge/Version-1.0.5-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
 [![Vibeathon 2026](https://img.shields.io/badge/Vibeathon-Feb%202026-purple?style=for-the-badge)](https://www.bridgemind.ai/vibeathon)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Bun](https://img.shields.io/badge/Bun-1.3+-black?style=for-the-badge)](https://bun.sh/)
@@ -263,8 +263,11 @@ MIT
 
 ## Changelog
 
+### 1.0.5 - 2026-01-30
+- chore: release v1.0.5
+
 ### 1.0.4 - 2026-01-30
-- Update version
+- fix(publish): correct archive generation for scoped packages
 
 ### 1.0.3 - 2026-01-30
 - fix(publish): automate release process and fix authentication

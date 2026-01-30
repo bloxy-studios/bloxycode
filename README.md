@@ -1,6 +1,6 @@
 # BloxyCode
 
-[![Version](https://img.shields.io/badge/Version-1.0.1-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
+[![Version](https://img.shields.io/badge/Version-1.0.2-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
 [![Vibeathon 2026](https://img.shields.io/badge/Vibeathon-Feb%202026-purple?style=for-the-badge)](https://www.bridgemind.ai/vibeathon)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Bun](https://img.shields.io/badge/Bun-1.3+-black?style=for-the-badge)](https://bun.sh/)
@@ -260,6 +260,20 @@ Contributions are welcome! Please see our contributing guidelines for more detai
 ## License
 
 MIT
+
+## Changelog
+
+### 1.0.2 - 2026-01-30
+- **Fixed**: npm global installation failing to find platform-specific binary
+  - Added `optionalDependencies` to package.json for all platform packages (darwin, linux, windows)
+  - This allows npm to automatically install the correct binary for the user's platform
+
+### 1.0.1 - Initial Release
+- Initial release of BloxyCode with Bloxy autonomous task execution
+- Multi-provider AI support (Claude, OpenAI, Gemini, and 15+ more)
+- MCP (Model Context Protocol) compatibility
+- TUI interface with SolidJS
+- Session management and agent system
 
 ## Links
 

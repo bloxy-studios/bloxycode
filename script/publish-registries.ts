@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 import { $ } from "bun"
-import { Script } from "@opencode-ai/script"
+import pkg from "../package.json"
+const Script = { version: pkg.version, channel: "latest", preview: false }
 
 if (!Script.preview) {
   // Calculate SHA values
@@ -179,7 +180,7 @@ if (!Script.preview) {
   ].join("\n")
 
   await $`rm -rf ./dist/homebrew-tap`
-  await $`git clone https://${process.env["GITHUB_TOKEN"]}@github.com/sst/homebrew-tap.git ./dist/homebrew-tap`
+  await $`git clone https://${process.env["GITHUB_TOKEN"]}@github.com/bloxystudios/homebrew-tap.git ./dist/homebrew-tap`
   await Bun.file("./dist/homebrew-tap/bloxycode.rb").write(homebrewFormula)
   await $`cd ./dist/homebrew-tap && git add bloxycode.rb`
   await $`cd ./dist/homebrew-tap && git commit -m "Update to v${Script.version}"`

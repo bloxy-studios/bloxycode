@@ -1,6 +1,5 @@
-[install]
-exact = true
+preload = ["@opentui/solid/preload"]
 
 [test]
-root = "./do-not-run-tests-from-root"
-
+preload = ["./test/preload.ts"]
+timeout = 10000  # 10 seconds (default is 5000ms)

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "name": "@bloxystudios/bloxycode",
   "type": "module",
   "license": "MIT",
@@ -14,17 +14,17 @@
     "url": "https://github.com/bloxystudios/bloxycode/issues"
   },
   "optionalDependencies": {
-    "@bloxystudios/bloxycode-darwin-arm64": "1.0.4",
-    "@bloxystudios/bloxycode-darwin-x64": "1.0.4",
-    "@bloxystudios/bloxycode-darwin-x64-baseline": "1.0.4",
-    "@bloxystudios/bloxycode-linux-arm64": "1.0.4",
-    "@bloxystudios/bloxycode-linux-x64": "1.0.4",
-    "@bloxystudios/bloxycode-linux-x64-baseline": "1.0.4",
-    "@bloxystudios/bloxycode-linux-arm64-musl": "1.0.4",
-    "@bloxystudios/bloxycode-linux-x64-musl": "1.0.4",
-    "@bloxystudios/bloxycode-linux-x64-baseline-musl": "1.0.4",
-    "@bloxystudios/bloxycode-windows-x64": "1.0.4",
-    "@bloxystudios/bloxycode-windows-x64-baseline": "1.0.4"
+    "@bloxystudios/bloxycode-darwin-arm64": "1.0.5",
+    "@bloxystudios/bloxycode-darwin-x64": "1.0.5",
+    "@bloxystudios/bloxycode-darwin-x64-baseline": "1.0.5",
+    "@bloxystudios/bloxycode-linux-arm64": "1.0.5",
+    "@bloxystudios/bloxycode-linux-x64": "1.0.5",
+    "@bloxystudios/bloxycode-linux-x64-baseline": "1.0.5",
+    "@bloxystudios/bloxycode-linux-arm64-musl": "1.0.5",
+    "@bloxystudios/bloxycode-linux-x64-musl": "1.0.5",
+    "@bloxystudios/bloxycode-linux-x64-baseline-musl": "1.0.5",
+    "@bloxystudios/bloxycode-windows-x64": "1.0.5",
+    "@bloxystudios/bloxycode-windows-x64-baseline": "1.0.5"
   },
   "resolutions": {
     "zod": "4.1.8",

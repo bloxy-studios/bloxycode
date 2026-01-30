@@ -64,7 +64,7 @@ if (!Script.preview) {
     }
   }
 
-  const image = "ghcr.io/bloxystudios/bloxycode"
+  const image = "ghcr.io/bloxy-studios/bloxycode"
   const platforms = "linux/amd64,linux/arm64"
   const tags = [`${image}:${Script.version}`, `${image}:latest`]
   const tagFlags = tags.flatMap((t) => ["-t", t])

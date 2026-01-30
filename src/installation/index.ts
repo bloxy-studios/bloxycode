@@ -81,15 +81,15 @@ export namespace Installation {
       },
       {
         name: "brew" as const,
-        command: () => $`brew list --formula opencode`.throws(false).quiet().text(),
+        command: () => $`brew list --formula bloxycode`.throws(false).quiet().text(),
       },
       {
         name: "scoop" as const,
-        command: () => $`scoop list opencode`.throws(false).quiet().text(),
+        command: () => $`scoop list bloxycode`.throws(false).quiet().text(),
       },
       {
         name: "choco" as const,
-        command: () => $`choco list --limit-output opencode`.throws(false).quiet().text(),
+        command: () => $`choco list --limit-output bloxycode`.throws(false).quiet().text(),
       },
     ]
 
@@ -104,7 +104,7 @@ export namespace Installation {
     for (const check of checks) {
       const output = await check.command()
       const installedName =
-        check.name === "brew" || check.name === "choco" || check.name === "scoop" ? "opencode" : "opencode-ai"
+        check.name === "brew" || check.name === "choco" || check.name === "scoop" ? "bloxycode" : "@bloxystudios/bloxycode"
       if (output.includes(installedName)) {
         return check.name
       }
@@ -121,30 +121,31 @@ export namespace Installation {
   )
 
   async function getBrewFormula() {
-    const tapFormula = await $`brew list --formula bloxystudios/tap/opencode`.throws(false).quiet().text()
-    if (tapFormula.includes("opencode")) return "bloxystudios/tap/opencode"
-    const coreFormula = await $`brew list --formula opencode`.throws(false).quiet().text()
-    if (coreFormula.includes("opencode")) return "opencode"
-    return "opencode"
+    const tapFormula = await $`brew list --formula bloxy-studios/tap/bloxycode`.throws(false).quiet().text()
+    if (tapFormula.includes("bloxycode")) return "bloxy-studios/tap/bloxycode"
+    const coreFormula = await $`brew list --formula bloxycode`.throws(false).quiet().text()
+    if (coreFormula.includes("bloxycode")) return "bloxycode"
+    return "bloxycode"
   }
 
   export async function upgrade(method: Method, target: string) {
     let cmd
     switch (method) {
       case "curl":
-        cmd = $`curl -fsSL https://opencode.ai/install | bash`.env({
+        // TODO: Update install script URL when available
+        cmd = $`curl -fsSL https://bloxycode.dev/install | bash`.env({
           ...process.env,
           VERSION: target,
         })
         break
       case "npm":
-        cmd = $`npm install -g opencode-ai@${target}`
+        cmd = $`npm install -g @bloxystudios/bloxycode@${target}`
         break
       case "pnpm":
-        cmd = $`pnpm install -g opencode-ai@${target}`
+        cmd = $`pnpm install -g @bloxystudios/bloxycode@${target}`
         break
       case "bun":
-        cmd = $`bun install -g opencode-ai@${target}`
+        cmd = $`bun install -g @bloxystudios/bloxycode@${target}`
         break
       case "brew": {
         const formula = await getBrewFormula()
@@ -155,10 +156,10 @@ export namespace Installation {
         break
       }
       case "choco":
-        cmd = $`echo Y | choco upgrade opencode --version=${target}`
+        cmd = $`echo Y | choco upgrade bloxycode --version=${target}`
         break
       case "scoop":
-        cmd = $`scoop install opencode@${target}`
+        cmd = $`scoop install bloxycode@${target}`
         break
       default:
         throw new Error(`Unknown method: ${method}`)
@@ -181,14 +182,14 @@ export namespace Installation {
 
   export const VERSION = typeof BLOXYCODE_VERSION === "string" ? BLOXYCODE_VERSION : "local"
   export const CHANNEL = typeof BLOXYCODE_CHANNEL === "string" ? BLOXYCODE_CHANNEL : "local"
-  export const USER_AGENT = `opencode/${CHANNEL}/${VERSION}/${Flag.BLOXYCODE_CLIENT}`
+  export const USER_AGENT = `bloxycode/${CHANNEL}/${VERSION}/${Flag.BLOXYCODE_CLIENT}`
 
   export async function latest(installMethod?: Method) {
     const detectedMethod = installMethod || (await method())
 
     if (detectedMethod === "brew") {
       const formula = await getBrewFormula()
-      if (formula === "opencode") {
+      if (formula === "bloxycode") {
         return fetch("https://formulae.brew.sh/api/formula/bloxycode.json")
           .then((res) => {
             if (!res.ok) throw new Error(res.statusText)
@@ -205,7 +206,7 @@ export namespace Installation {
         return reg.endsWith("/") ? reg.slice(0, -1) : reg
       })
       const channel = CHANNEL
-      return fetch(`${registry}/opencode-ai/${channel}`)
+      return fetch(`${registry}/@bloxystudios/bloxycode/${channel}`)
         .then((res) => {
           if (!res.ok) throw new Error(res.statusText)
           return res.json()
@@ -215,7 +216,7 @@ export namespace Installation {
 
     if (detectedMethod === "choco") {
       return fetch(
-        "https://community.chocolatey.org/api/v2/Packages?$filter=Id%20eq%20%27opencode%27%20and%20IsLatestVersion&$select=Version",
+        "https://community.chocolatey.org/api/v2/Packages?$filter=Id%20eq%20%27bloxycode%27%20and%20IsLatestVersion&$select=Version",
         { headers: { Accept: "application/json;odata=verbose" } },
       )
         .then((res) => {

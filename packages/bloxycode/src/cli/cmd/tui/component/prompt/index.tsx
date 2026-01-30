@@ -1061,6 +1061,42 @@ export function Prompt(props: PromptProps) {
                       </Show>
                     )
                   })()}
+                  {(() => {
+                    const switching = createMemo(() => {
+                      const s = status() as { type: string; from?: string; to?: string }
+                      if (s.type !== "switching") return
+                      return s as { type: "switching"; from: string; to: string }
+                    })
+                    return (
+                      <Show when={switching()}>
+                        <text fg={theme.warning}>
+                          Switching from {switching()!.from} to {switching()!.to}...
+                        </text>
+                      </Show>
+                    )
+                  })()}
+                  {(() => {
+                    const sleeping = createMemo(() => {
+                      const s = status() as { type: string; resetAt?: number }
+                      if (s.type !== "sleeping") return
+                      return s as { type: "sleeping"; resetAt: number }
+                    })
+                    const [seconds, setSeconds] = createSignal(0)
+                    onMount(() => {
+                      const timer = setInterval(() => {
+                        const reset = sleeping()?.resetAt
+                        if (reset) setSeconds(Math.max(0, Math.round((reset - Date.now()) / 1000)))
+                      }, 1000)
+                      onCleanup(() => clearInterval(timer))
+                    })
+                    return (
+                      <Show when={sleeping()}>
+                        <text fg={theme.textMuted}>
+                          All providers rate-limited. Resuming in {formatDuration(seconds())}
+                        </text>
+                      </Show>
+                    )
+                  })()}
                 </box>
               </box>
               <text fg={store.interrupt > 0 ? theme.primary : theme.text}>
@@ -1071,7 +1107,7 @@ export function Prompt(props: PromptProps) {
               </text>
             </box>
           </Show>
-          <Show when={status().type !== "retry"}>
+          <Show when={status().type !== "retry" && (status() as { type: string }).type !== "switching" && (status() as { type: string }).type !== "sleeping"}>
             <box gap={2} flexDirection="row">
               <Switch>
                 <Match when={store.mode === "normal"}>

@@ -8,8 +8,9 @@ import { SessionSummary } from "./summary"
 import { Bus } from "@/bus"
 import { SessionRetry } from "./retry"
 import { SessionStatus } from "./status"
+import { SessionFallback } from "./fallback"
+import { Provider } from "@/provider/provider"
 import { Plugin } from "@/plugin"
-import type { Provider } from "@/provider/provider"
 import { LLM } from "./llm"
 import { Config } from "@/config/config"
 import { SessionCompaction } from "./compaction"
@@ -344,15 +345,58 @@ export namespace SessionProcessor {
             const error = MessageV2.fromError(e, { providerID: input.model.providerID })
             const retry = SessionRetry.retryable(error)
             if (retry !== undefined) {
-              attempt++
-              const delay = SessionRetry.delay(attempt, error.name === "APIError" ? error : undefined)
-              SessionStatus.set(input.sessionID, {
-                type: "retry",
-                attempt,
-                message: retry,
-                next: Date.now() + delay,
+              // Mark current provider as rate-limited
+              const headers = error.name === "APIError" ? error.data.responseHeaders : undefined
+              SessionFallback.markRateLimited(input.model.providerID, retry, headers)
+
+              // Try to find an alternative provider
+              const alternative = await SessionFallback.getNextAvailable(input.model.providerID, {
+                toolcall: input.model.capabilities.toolcall,
+                attachment: input.model.capabilities.attachment,
               })
+
+              if (alternative) {
+                // Switch to alternative provider
+                SessionStatus.set(input.sessionID, {
+                  type: "switching",
+                  from: input.model.providerID,
+                  to: alternative.providerID,
+                  reason: retry,
+                })
+
+                // Get the full model info for the alternative
+                const newModel = await Provider.getModel(alternative.providerID, alternative.modelID)
+                input.model = newModel
+                log.info("Switched to alternative provider", {
+                  from: input.model.providerID,
+                  to: alternative.providerID,
+                  model: alternative.modelID,
+                })
+                continue
+              }
+
+              // All providers exhausted - sleep until earliest reset
+              const resetTime = SessionFallback.getEarliestResetTime()
+              const delay = resetTime ? Math.max(resetTime - Date.now(), 1000) : SessionRetry.delay(attempt, error.name === "APIError" ? error : undefined)
+
+              attempt++
+              SessionStatus.set(input.sessionID, {
+                type: "sleeping",
+                reason: "All providers rate-limited",
+                resetAt: Date.now() + delay,
+                providers: SessionFallback.getRateLimitedProviders().map((p) => ({
+                  providerID: p.providerID,
+                  resetAt: p.resetAt,
+                })),
+              })
+
+              log.info("All providers rate-limited, sleeping", {
+                delay,
+                resetAt: new Date(Date.now() + delay).toISOString(),
+              })
+
               await SessionRetry.sleep(delay, input.abort).catch(() => {})
+              SessionFallback.clearExpiredLimits()
               continue
             }
             input.assistantMessage.error = error

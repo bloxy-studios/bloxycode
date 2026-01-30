@@ -1,5 +1,13 @@
 # BloxyCode
 
+[![Vibeathon 2026](https://img.shields.io/badge/Vibeathon-Feb%202026-blue?style=for-the-badge)](https://www.bridgemind.ai/vibeathon)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Bun](https://img.shields.io/badge/Bun-1.3+-black?style=for-the-badge)](https://bun.sh/)
+
+> **Vibeathon Entry**: This project is a submission for the [BridgeMind Vibeathon](https://www.bridgemind.ai/vibeathon) (Feb 1-14, 2026)
+>
+> **BloxyCode** is an enhanced fork of [OpenCode](https://github.com/opencode-ai/opencode) featuring **Bloxy** - an autonomous task execution system that runs until your tasks are done.
+
 An AI-powered coding CLI tool that brings the power of Claude and other LLMs directly to your terminal. BloxyCode enables autonomous code generation, intelligent file operations, and seamless AI-assisted development workflows.
 
 ## Features

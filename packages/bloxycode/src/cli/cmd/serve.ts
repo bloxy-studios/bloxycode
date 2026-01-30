@@ -9,7 +9,7 @@ export const ServeCommand = cmd({
   describe: "starts a headless bloxycode server",
   handler: async (args) => {
     if (!Flag.BLOXYCODE_SERVER_PASSWORD) {
-      console.log("Warning: OPENCODE_SERVER_PASSWORD is not set; server is unsecured.")
+      console.log("Warning: BLOXYCODE_SERVER_PASSWORD is not set; server is unsecured.")
     }
     const opts = await resolveNetworkOptions(args)
     const server = Server.listen(opts)

@@ -33,7 +33,7 @@ async function resolveRelative(instruction: string): Promise<string[]> {
   }
   if (!Flag.BLOXYCODE_CONFIG_DIR) {
     log.warn(
-      `Skipping relative instruction "${instruction}" - no OPENCODE_CONFIG_DIR set while project config is disabled`,
+      `Skipping relative instruction "${instruction}" - no BLOXYCODE_CONFIG_DIR set while project config is disabled`,
     )
     return []
   }

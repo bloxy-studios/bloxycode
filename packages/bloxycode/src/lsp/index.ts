@@ -65,7 +65,7 @@ export namespace LSP {
     if (Flag.BLOXYCODE_EXPERIMENTAL_LSP_TY) {
       // If experimental flag is enabled, disable pyright
       if (servers["pyright"]) {
-        log.info("LSP server pyright is disabled because OPENCODE_EXPERIMENTAL_LSP_TY is enabled")
+        log.info("LSP server pyright is disabled because BLOXYCODE_EXPERIMENTAL_LSP_TY is enabled")
         delete servers["pyright"]
       }
     } else {

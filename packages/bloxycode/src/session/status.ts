@@ -18,6 +18,30 @@ export namespace SessionStatus {
       z.object({
         type: z.literal("busy"),
       }),
+      z.object({
+        type: z.literal("bloxy"),
+        taskIndex: z.number(),
+        totalTasks: z.number(),
+        currentTask: z.string(),
+        status: z.enum(["executing", "validating", "advancing", "paused"]),
+      }),
+      z.object({
+        type: z.literal("switching"),
+        from: z.string(),
+        to: z.string(),
+        reason: z.string(),
+      }),
+      z.object({
+        type: z.literal("sleeping"),
+        reason: z.string(),
+        resetAt: z.number(),
+        providers: z.array(
+          z.object({
+            providerID: z.string(),
+            resetAt: z.number(),
+          }),
+        ),
+      }),
     ])
     .meta({
       ref: "SessionStatus",

@@ -1,0 +1,25 @@
+Show the current Bloxy session status.
+
+Read the state from .bloxycode/bloxy-state.json and display:
+
+1. **Session Overview**
+   - PRD file being executed
+   - Overall status (running/paused/completed/failed)
+   - Progress: X/Y tasks (Z%)
+
+2. **Completed Tasks** (if any)
+   - Task title and completion summary
+   - Time taken (if available)
+
+3. **Current Task** (if running)
+   - Task title and description
+   - Attempt number
+
+4. **Pending Tasks** (if any)
+   - List of remaining task titles
+
+5. **Failed Tasks** (if any)
+   - Task title and error message
+   - Number of attempts made
+
+If no active Bloxy session exists, inform the user and suggest starting one with /bloxy PRD.md

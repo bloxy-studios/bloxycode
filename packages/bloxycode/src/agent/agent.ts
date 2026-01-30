@@ -13,6 +13,7 @@ import PROMPT_COMPACTION from "./prompt/compaction.txt"
 import PROMPT_EXPLORE from "./prompt/explore.txt"
 import PROMPT_SUMMARY from "./prompt/summary.txt"
 import PROMPT_TITLE from "./prompt/title.txt"
+import PROMPT_BLOXY from "./prompt/bloxy.txt"
 import { PermissionNext } from "@/permission/next"
 import { mergeDeep, pipe, sortBy, values } from "remeda"
 import { Global } from "@/global"
@@ -108,6 +109,26 @@ export namespace Agent {
         ),
         mode: "primary",
         native: true,
+      },
+      bloxy: {
+        name: "bloxy",
+        description: "Autonomous task executor. Processes PRD tasks sequentially until completion. Start with /bloxy PRD.md command.",
+        options: {},
+        permission: PermissionNext.merge(
+          defaults,
+          PermissionNext.fromConfig({
+            "*": "allow",
+            question: "deny",  // No interactive questions in autonomous mode
+            plan_enter: "deny",
+            plan_exit: "deny",
+            doom_loop: "allow",  // Allow to continue even in potential doom loops
+          }),
+          user,
+        ),
+        mode: "primary",
+        native: true,
+        color: "#FF6B35",  // Orange for visibility
+        prompt: PROMPT_BLOXY,
       },
       general: {
         name: "general",

@@ -5,6 +5,10 @@ import { Instance } from "../project/instance"
 import { Identifier } from "../id/id"
 import PROMPT_INITIALIZE from "./template/initialize.txt"
 import PROMPT_REVIEW from "./template/review.txt"
+import PROMPT_BLOXY from "./template/bloxy.txt"
+import PROMPT_BLOXY_STATUS from "./template/bloxy-status.txt"
+import PROMPT_BLOXY_RESUME from "./template/bloxy-resume.txt"
+import PROMPT_BLOXY_VALIDATE from "./template/bloxy-validate.txt"
 import { MCP } from "../mcp"
 
 export namespace Command {
@@ -53,6 +57,10 @@ export namespace Command {
   export const Default = {
     INIT: "init",
     REVIEW: "review",
+    BLOXY: "bloxy",
+    BLOXY_STATUS: "bloxy-status",
+    BLOXY_RESUME: "bloxy-resume",
+    BLOXY_VALIDATE: "bloxy-validate",
   } as const
 
   const state = Instance.state(async () => {
@@ -75,6 +83,40 @@ export namespace Command {
         },
         subtask: true,
         hints: hints(PROMPT_REVIEW),
+      },
+      [Default.BLOXY]: {
+        name: Default.BLOXY,
+        description: "start autonomous task execution from PRD file [path], defaults to PRD.md",
+        agent: "bloxy",
+        get template() {
+          return PROMPT_BLOXY
+        },
+        hints: hints(PROMPT_BLOXY),
+      },
+      [Default.BLOXY_STATUS]: {
+        name: Default.BLOXY_STATUS,
+        description: "show current Bloxy task execution status",
+        get template() {
+          return PROMPT_BLOXY_STATUS
+        },
+        hints: [],
+      },
+      [Default.BLOXY_RESUME]: {
+        name: Default.BLOXY_RESUME,
+        description: "resume Bloxy from last failure [--skip-failed]",
+        agent: "bloxy",
+        get template() {
+          return PROMPT_BLOXY_RESUME
+        },
+        hints: hints(PROMPT_BLOXY_RESUME),
+      },
+      [Default.BLOXY_VALIDATE]: {
+        name: Default.BLOXY_VALIDATE,
+        description: "validate PRD file syntax without executing [path]",
+        get template() {
+          return PROMPT_BLOXY_VALIDATE
+        },
+        hints: hints(PROMPT_BLOXY_VALIDATE),
       },
     }
 

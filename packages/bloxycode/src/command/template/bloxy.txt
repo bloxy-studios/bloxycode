@@ -1,0 +1,14 @@
+Start autonomous task execution from PRD file: $1
+
+First, parse the PRD file and load all tasks. Display a summary of what tasks will be executed.
+
+Then, begin executing tasks sequentially. For each task:
+1. Read and understand the task requirements
+2. Implement the task completely
+3. Run tests if configured
+4. Commit changes if auto-commit is enabled
+5. Signal completion using the bloxy_control tool
+
+Continue until all tasks are complete or an unrecoverable error occurs.
+
+If no PRD path is specified, default to PRD.md in the current directory.

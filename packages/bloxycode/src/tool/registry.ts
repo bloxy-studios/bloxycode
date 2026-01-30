@@ -27,6 +27,7 @@ import { LspTool } from "./lsp"
 import { Truncate } from "./truncation"
 import { PlanExitTool, PlanEnterTool } from "./plan"
 import { ApplyPatchTool } from "./apply_patch"
+import { BloxyControlTool } from "./bloxy-control"
 
 export namespace ToolRegistry {
   const log = Log.create({ service: "tool.registry" })
@@ -114,6 +115,7 @@ export namespace ToolRegistry {
       ...(Flag.BLOXYCODE_EXPERIMENTAL_LSP_TOOL ? [LspTool] : []),
       ...(config.experimental?.batch_tool === true ? [BatchTool] : []),
       ...(Flag.BLOXYCODE_EXPERIMENTAL_PLAN_MODE && Flag.BLOXYCODE_CLIENT === "cli" ? [PlanExitTool, PlanEnterTool] : []),
+      BloxyControlTool,
       ...custom,
     ]
   }

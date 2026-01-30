@@ -92,7 +92,7 @@ export namespace Config {
     // Inline config content has highest precedence
     if (Flag.BLOXYCODE_CONFIG_CONTENT) {
       result = mergeConfigConcatArrays(result, JSON.parse(Flag.BLOXYCODE_CONFIG_CONTENT))
-      log.debug("loaded custom config from OPENCODE_CONFIG_CONTENT")
+      log.debug("loaded custom config from BLOXYCODE_CONFIG_CONTENT")
     }
 
     result.agent = result.agent || {}
@@ -123,7 +123,7 @@ export namespace Config {
 
     if (Flag.BLOXYCODE_CONFIG_DIR) {
       directories.push(Flag.BLOXYCODE_CONFIG_DIR)
-      log.debug("loading config from OPENCODE_CONFIG_DIR", { path: Flag.BLOXYCODE_CONFIG_DIR })
+      log.debug("loading config from BLOXYCODE_CONFIG_DIR", { path: Flag.BLOXYCODE_CONFIG_DIR })
     }
 
     for (const dir of unique(directories)) {

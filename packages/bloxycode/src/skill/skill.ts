@@ -38,7 +38,7 @@ export namespace Skill {
     }),
   )
 
-  const OPENCODE_SKILL_GLOB = new Bun.Glob("{skill,skills}/**/SKILL.md")
+  const BLOXYCODE_SKILL_GLOB = new Bun.Glob("{skill,skills}/**/SKILL.md")
   const CLAUDE_SKILL_GLOB = new Bun.Glob("skills/**/SKILL.md")
 
   export const state = Instance.state(async () => {
@@ -112,7 +112,7 @@ export namespace Skill {
 
     // Scan .bloxycode/skill/ directories
     for (const dir of await Config.directories()) {
-      for await (const match of OPENCODE_SKILL_GLOB.scan({
+      for await (const match of BLOXYCODE_SKILL_GLOB.scan({
         cwd: dir,
         absolute: true,
         onlyFiles: true,

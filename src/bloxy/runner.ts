@@ -9,6 +9,13 @@ import { BloxyEvent } from "./event"
 export namespace BloxyRunner {
   const log = Log.create({ service: "bloxy.runner" })
 
+  /**
+   * Get the effective worktree path, falling back to directory for non-git projects
+   */
+  function getWorktree(): string {
+    return Instance.worktree === "/" ? Instance.directory : Instance.worktree
+  }
+
   export interface StartOptions {
     prdPath: string
     sessionID: string
@@ -19,7 +26,7 @@ export namespace BloxyRunner {
    * Start a new Bloxy session by parsing the PRD and initializing state
    */
   export async function start(options: StartOptions): Promise<BloxyState.Session> {
-    const worktree = Instance.worktree
+    const worktree = getWorktree()
 
     // Check for existing session
     const existing = await BloxyState.load(worktree)
@@ -61,7 +68,7 @@ export namespace BloxyRunner {
    * Get the context message to inject for the current task
    */
   export async function getTaskContext(sessionID: string): Promise<string | null> {
-    const worktree = Instance.worktree
+    const worktree = getWorktree()
     const session = await BloxyState.load(worktree)
 
     if (!session) {
@@ -89,7 +96,7 @@ export namespace BloxyRunner {
    * Check if the session should continue to the next task
    */
   export async function shouldContinue(): Promise<boolean> {
-    const worktree = Instance.worktree
+    const worktree = getWorktree()
     const session = await BloxyState.load(worktree)
 
     if (!session) {
@@ -103,7 +110,7 @@ export namespace BloxyRunner {
    * Complete the session and clean up
    */
   export async function complete(sessionID: string): Promise<void> {
-    const worktree = Instance.worktree
+    const worktree = getWorktree()
     const session = await BloxyState.load(worktree)
 
     if (!session) {
@@ -136,7 +143,7 @@ export namespace BloxyRunner {
    * Pause the current session
    */
   export async function pause(): Promise<void> {
-    const worktree = Instance.worktree
+    const worktree = getWorktree()
     const session = await BloxyState.load(worktree)
 
     if (session) {
@@ -148,7 +155,7 @@ export namespace BloxyRunner {
    * Resume a paused session
    */
   export async function resume(): Promise<void> {
-    const worktree = Instance.worktree
+    const worktree = getWorktree()
     const session = await BloxyState.load(worktree)
 
     if (session) {
@@ -160,7 +167,7 @@ export namespace BloxyRunner {
    * Stop the session completely
    */
   export async function stop(): Promise<void> {
-    const worktree = Instance.worktree
+    const worktree = getWorktree()
     await BloxyState.remove(worktree)
     log.info("Bloxy session stopped and removed")
   }
@@ -173,7 +180,7 @@ export namespace BloxyRunner {
     session: BloxyState.Session | null
     statusLine: string
   }> {
-    const worktree = Instance.worktree
+    const worktree = getWorktree()
     const session = await BloxyState.load(worktree)
 
     if (!session) {

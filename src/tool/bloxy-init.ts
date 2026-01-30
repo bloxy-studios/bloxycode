@@ -21,7 +21,8 @@ export const BloxyInitTool = Tool.define<
     description: "Initialize a new Bloxy autonomous session by parsing a PRD file.",
     parameters: Parameters,
     async execute(args) {
-      const worktree = Instance.worktree
+      // Use directory as fallback when worktree is "/" (non-git projects)
+      const worktree = Instance.worktree === "/" ? Instance.directory : Instance.worktree
       
       try {
         const result = await BloxyParser.parse({

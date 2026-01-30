@@ -2,21 +2,11 @@ Validate the PRD file at $1 without executing tasks.
 
 If no path is provided, default to PRD.md.
 
-Perform the following validation checks:
-
-1. **File Exists**: Verify the PRD file exists and is readable
-2. **Syntax Check**: Validate markdown checkbox format
-   - `- [ ]` for pending tasks
-   - `- [x]` for completed tasks
-   - `- [~]` for deferred tasks
-3. **Task Count**: Ensure at least one task is defined
-4. **Task Titles**: Each task must have a title
-5. **No Duplicates**: Check for duplicate task IDs
-6. **Config Validation**: If YAML frontmatter or config section exists, validate it
+Use the `bloxy_init` tool with `dryRun: true` to perform the validation.
 
 Report:
 - Total tasks found (pending, completed, deferred)
-- Any validation errors or warnings
+- Any validation errors or warnings (returned by the tool)
 - Whether the PRD is ready for execution
 
 Do NOT start executing tasks. This is a dry-run validation only.

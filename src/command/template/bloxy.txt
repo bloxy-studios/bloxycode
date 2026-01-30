@@ -1,6 +1,7 @@
 Start autonomous task execution from PRD file: $1
 
-First, parse the PRD file and load all tasks. Display a summary of what tasks will be executed.
+First, use the bloxy_init tool to parse the PRD file and initialize the session.
+This will load all tasks and display a summary.
 
 Then, begin executing tasks sequentially. For each task:
 1. Read and understand the task requirements

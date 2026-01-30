@@ -28,6 +28,7 @@ import { Truncate } from "./truncation"
 import { PlanExitTool, PlanEnterTool } from "./plan"
 import { ApplyPatchTool } from "./apply_patch"
 import { BloxyControlTool } from "./bloxy-control"
+import { BloxyInitTool } from "./bloxy-init"
 
 export namespace ToolRegistry {
   const log = Log.create({ service: "tool.registry" })
@@ -116,6 +117,7 @@ export namespace ToolRegistry {
       ...(config.experimental?.batch_tool === true ? [BatchTool] : []),
       ...(Flag.BLOXYCODE_EXPERIMENTAL_PLAN_MODE && Flag.BLOXYCODE_CLIENT === "cli" ? [PlanExitTool, PlanEnterTool] : []),
       BloxyControlTool,
+      BloxyInitTool,
       ...custom,
     ]
   }

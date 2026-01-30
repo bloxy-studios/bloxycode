@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 import { $ } from "bun"
-import { Script } from "@opencode-ai/script"
+import pkg from "../package.json"
+const Script = { version: pkg.version, channel: "latest", preview: false }
 
 if (!Script.preview) {
   // Calculate SHA values

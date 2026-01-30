@@ -69,3 +69,6 @@ src/provider/models-snapshot.ts
 # Local data
 .bloxycode/
 .opencode/
+
+# Configuration
+.npmrc

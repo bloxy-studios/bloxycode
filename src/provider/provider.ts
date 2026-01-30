@@ -1,5 +1,6 @@
 import z from "zod"
 import fuzzysort from "fuzzysort"
+import path from "path"
 import { Config } from "../config/config"
 import { mapValues, mergeDeep, omit, pickBy, sortBy } from "remeda"
 import { NoSuchModelError, type Provider as SDK } from "ai"
@@ -13,6 +14,7 @@ import { Env } from "../env"
 import { Instance } from "../project/instance"
 import { Flag } from "../flag/flag"
 import { iife } from "@/util/iife"
+import { Global } from "../global"
 
 // Direct imports for bundled providers
 import { createAmazonBedrock, type AmazonBedrockProviderSettings } from "@ai-sdk/amazon-bedrock"
@@ -503,6 +505,26 @@ export namespace Provider {
           headers: {
             "X-Cerebras-3rd-Party-Integration": "opencode",
           },
+        },
+      }
+    },
+    antigravity: async (input) => {
+      // Check if any Antigravity accounts are configured
+      const accountsPath = path.join(Global.Path.config, "antigravity-accounts.json")
+      const hasAccounts = await Bun.file(accountsPath)
+        .json()
+        .then((data: any) => data?.accounts?.length > 0)
+        .catch(() => false)
+
+      if (!hasAccounts) return { autoload: false }
+
+      return {
+        autoload: true,
+        options: {
+          baseURL: "https://autopush-aicompanion-pa.sandbox.googleapis.com",
+        },
+        async getModel(sdk: any, modelID: string) {
+          return sdk.languageModel(modelID)
         },
       }
     },

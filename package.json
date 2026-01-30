@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "version": "1.1.37",
+  "version": "1.0.1",
   "name": "@bloxystudios/bloxycode",
   "type": "module",
   "license": "MIT",
@@ -12,6 +12,10 @@
   "homepage": "https://github.com/bloxystudios/bloxycode#readme",
   "bugs": {
     "url": "https://github.com/bloxystudios/bloxycode/issues"
+  },
+  "resolutions": {
+    "zod": "4.1.8",
+    "quansync": "^1.0.0"
   },
   "scripts": {
     "typecheck": "tsgo --noEmit",
@@ -82,7 +86,7 @@
     "@ai-sdk/xai": "2.0.51",
     "@clack/prompts": "1.0.0-alpha.1",
     "@gitlab/gitlab-ai-provider": "3.3.1",
-    "@hono/standard-validator": "0.1.5",
+    "@hono/standard-validator": "^0.2.0",
     "@hono/zod-validator": "^0.7.6",
     "@modelcontextprotocol/sdk": "1.25.2",
     "@octokit/graphql": "9.0.2",
@@ -116,7 +120,7 @@
     "open": "10.1.2",
     "opentui-spinner": "0.0.6",
     "partial-json": "0.1.7",
-    "quansync": "^1.0.0",
+    "quansync": "^0.2.11",
     "remeda": "2.26.0",
     "solid-js": "1.9.10",
     "strip-ansi": "7.1.2",

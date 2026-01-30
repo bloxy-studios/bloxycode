@@ -1,5 +1,14 @@
 # BloxyCode
 
+[![Version](https://img.shields.io/badge/Version-1.0.1-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
+[![Vibeathon 2026](https://img.shields.io/badge/Vibeathon-Feb%202026-purple?style=for-the-badge)](https://www.bridgemind.ai/vibeathon)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Bun](https://img.shields.io/badge/Bun-1.3+-black?style=for-the-badge)](https://bun.sh/)
+
+> **Vibeathon Entry**: This project is a submission for the [BridgeMind Vibeathon](https://www.bridgemind.ai/vibeathon) (Feb 1-14, 2026)
+>
+> **BloxyCode** is an enhanced fork of [OpenCode](https://github.com/opencode-ai/opencode) featuring **Bloxy** - an autonomous task execution system that runs until your tasks are done.
+
 An AI-powered coding CLI tool that brings the power of Claude and other LLMs directly to your terminal. BloxyCode enables autonomous code generation, intelligent file operations, and seamless AI-assisted development workflows.
 
 ## Features
@@ -32,6 +41,14 @@ Create and manage specialized AI agents for different tasks:
 - **Custom Commands**: Define project-specific slash commands
 - **Skill System**: Reusable best practices and workflows
 
+### 🚀 Antigravity Integration (Built-in)
+Access Claude and Gemini models through your Google account — no API keys required:
+- **Claude Opus 4.5 & Sonnet 4.5** with extended thinking support
+- **Gemini 3 Pro/Flash** with configurable thinking levels
+- **Multi-account support** with automatic rate limit rotation
+- **Free tier access** using your Google Cloud quota
+- See [Antigravity Documentation](docs/ANTIGRAVITY.md) for setup
+
 ### 💬 Multiple Interaction Modes
 - **CLI Chat**: Direct command-line interaction with AI
 - **Server Mode**: Run as a persistent server with HTTP API
@@ -45,12 +62,27 @@ Create and manage specialized AI agents for different tasks:
 
 ## Installation
 
+### Global Installation (Recommended)
+
 ```bash
-# Install via npm (coming soon)
+# Install via npm
 npm install -g @bloxystudios/bloxycode
 
-# Or run directly with bun
+# Or install via bun
+bun install -g @bloxystudios/bloxycode
+```
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/bloxystudios/bloxycode.git
+cd bloxycode
+
+# Install dependencies
 bun install
+
+# Run in development mode
 bun run dev
 ```
 

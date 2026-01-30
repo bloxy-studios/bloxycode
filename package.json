@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "name": "@bloxystudios/bloxycode",
   "type": "module",
   "license": "MIT",
@@ -14,17 +14,17 @@
     "url": "https://github.com/bloxystudios/bloxycode/issues"
   },
   "optionalDependencies": {
-    "@bloxystudios/bloxycode-darwin-arm64": "1.0.2",
-    "@bloxystudios/bloxycode-darwin-x64": "1.0.2",
-    "@bloxystudios/bloxycode-darwin-x64-baseline": "1.0.2",
-    "@bloxystudios/bloxycode-linux-arm64": "1.0.2",
-    "@bloxystudios/bloxycode-linux-x64": "1.0.2",
-    "@bloxystudios/bloxycode-linux-x64-baseline": "1.0.2",
-    "@bloxystudios/bloxycode-linux-arm64-musl": "1.0.2",
-    "@bloxystudios/bloxycode-linux-x64-musl": "1.0.2",
-    "@bloxystudios/bloxycode-linux-x64-baseline-musl": "1.0.2",
-    "@bloxystudios/bloxycode-windows-x64": "1.0.2",
-    "@bloxystudios/bloxycode-windows-x64-baseline": "1.0.2"
+    "@bloxystudios/bloxycode-darwin-arm64": "1.0.3",
+    "@bloxystudios/bloxycode-darwin-x64": "1.0.3",
+    "@bloxystudios/bloxycode-darwin-x64-baseline": "1.0.3",
+    "@bloxystudios/bloxycode-linux-arm64": "1.0.3",
+    "@bloxystudios/bloxycode-linux-x64": "1.0.3",
+    "@bloxystudios/bloxycode-linux-x64-baseline": "1.0.3",
+    "@bloxystudios/bloxycode-linux-arm64-musl": "1.0.3",
+    "@bloxystudios/bloxycode-linux-x64-musl": "1.0.3",
+    "@bloxystudios/bloxycode-linux-x64-baseline-musl": "1.0.3",
+    "@bloxystudios/bloxycode-windows-x64": "1.0.3",
+    "@bloxystudios/bloxycode-windows-x64-baseline": "1.0.3"
   },
   "resolutions": {
     "zod": "4.1.8",
@@ -40,7 +40,8 @@
     "lint": "echo 'Running lint checks...' && bun test --coverage",
     "format": "echo 'Formatting code...' && bun run --prettier --write src/**/*.ts",
     "docs": "echo 'Generating documentation...' && find src -name '*.ts' -exec echo 'Processing: {}' \\;",
-    "deploy": "echo 'Deploying application...' && bun run build && echo 'Deployment completed successfully'"
+    "deploy": "echo 'Deploying application...' && bun run build && echo 'Deployment completed successfully'",
+    "release": "bun run script/release.ts"
   },
   "bin": {
     "bloxycode": "./bin/bloxycode"

@@ -56,10 +56,11 @@ for (const tag of tags) {
 if (!Script.preview) {
   // Create archives for GitHub release
   for (const key of Object.keys(binaries)) {
+    const simpleName = key.split("/").pop()!
     if (key.includes("linux")) {
-      await $`tar -czf ../../${key}.tar.gz *`.cwd(`dist/${key}/bin`)
+      await $`tar -czf ../../../${simpleName}.tar.gz *`.cwd(`dist/${key}/bin`)
     } else {
-      await $`zip -r ../../${key}.zip *`.cwd(`dist/${key}/bin`)
+      await $`zip -r ../../../${simpleName}.zip *`.cwd(`dist/${key}/bin`)
     }
   }
 

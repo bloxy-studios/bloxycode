@@ -1033,6 +1033,13 @@ export namespace Config {
       layout: Layout.optional().describe("@deprecated Always uses stretch layout."),
       permission: Permission.optional(),
       tools: z.record(z.string(), z.boolean()).optional(),
+      rules: z.array(z.string()).optional().describe("Rules for the Bloxy agent to follow"),
+      capabilities: z
+        .object({
+          browser: z.enum(["auto", "true", "false"]).optional(),
+        })
+        .optional()
+        .describe("Capabilities configuration for Bloxy"),
       enterprise: z
         .object({
           url: z.string().optional().describe("Enterprise URL"),

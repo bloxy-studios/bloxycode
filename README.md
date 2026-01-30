@@ -40,6 +40,14 @@ Create and manage specialized AI agents for different tasks:
 - **Custom Commands**: Define project-specific slash commands
 - **Skill System**: Reusable best practices and workflows
 
+### 🚀 Antigravity Integration (Built-in)
+Access Claude and Gemini models through your Google account — no API keys required:
+- **Claude Opus 4.5 & Sonnet 4.5** with extended thinking support
+- **Gemini 3 Pro/Flash** with configurable thinking levels
+- **Multi-account support** with automatic rate limit rotation
+- **Free tier access** using your Google Cloud quota
+- See [Antigravity Documentation](docs/ANTIGRAVITY.md) for setup
+
 ### 💬 Multiple Interaction Modes
 - **CLI Chat**: Direct command-line interaction with AI
 - **Server Mode**: Run as a persistent server with HTTP API

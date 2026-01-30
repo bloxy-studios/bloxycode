@@ -31,7 +31,8 @@ export const BloxyControlTool = Tool.define<
   description: DESCRIPTION,
   parameters: Parameters,
   async execute(args, ctx) {
-    const worktree = Instance.worktree
+    // Use directory as fallback when worktree is "/" (non-git projects)
+    const worktree = Instance.worktree === "/" ? Instance.directory : Instance.worktree
     const session = await BloxyState.load(worktree)
 
     if (!session) {

@@ -2,6 +2,9 @@ name: Publish to NPM
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
   release:
     types: [published]
 
@@ -34,7 +37,17 @@ jobs:
       - name: Build packages
         run: bun run build
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Publish to NPM
         run: bun run script/publish.ts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to Registries
+        run: bun run script/publish-registries.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

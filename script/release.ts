@@ -66,7 +66,7 @@ await Bun.file(readmePath).write(readme)
 // 4. Git Commit and Tag
 console.log("Committing and tagging...")
 try {
-  await $`git add package.json README.md`
+  await $`git add .`
   await $`git commit -m "chore: release v${newVersion}"`
   await $`git tag v${newVersion}`
   

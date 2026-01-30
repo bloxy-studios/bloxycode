@@ -1,0 +1,42 @@
+Analyze the current project and perform a complete initialization for the Bloxy agent.
+
+1. **Create `PRD.md`** in ${path} (if it doesn't exist):
+   Use this format:
+   ```markdown
+   # Project Requirements Document
+
+   ## Overview
+   [Brief description of the project goal]
+
+   ## Tasks
+   - [ ] Task 1: [Description]
+   - [ ] Task 2: [Description]
+   ...
+   ```
+   If arguments are provided ("$ARGUMENTS"), use them to populate the tasks. Otherwise, create generic tasks relevant to the codebase.
+
+2. **Create `.bloxycode/bloxycode.json`** (if it doesn't exist):
+   Initialize with this default configuration:
+   ```json
+   {
+     "agent": {
+       "bloxy": {
+         "description": "Autonomous task executor",
+         "mode": "primary",
+         "permission": {
+           "*": "allow",
+           "question": "deny"
+         }
+       }
+     },
+     "rules": [
+       "Follow the existing code style and patterns",
+       "Ensure all tests pass before completing a task"
+     ],
+     "capabilities": {
+       "browser": "auto"
+     }
+   }
+   ```
+
+Report back which files were created or if they already existed.

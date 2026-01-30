@@ -128,10 +128,10 @@ async function showRemovalSummary(targets: RemovalTargets, method: Installation.
 
   if (method !== "curl" && method !== "unknown") {
     const cmds: Record<string, string> = {
-      npm: "npm uninstall -g opencode-ai",
-      pnpm: "pnpm uninstall -g opencode-ai",
-      bun: "bun remove -g opencode-ai",
-      yarn: "yarn global remove opencode-ai",
+      npm: "npm uninstall -g @bloxystudios/bloxycode",
+      pnpm: "pnpm uninstall -g @bloxystudios/bloxycode",
+      bun: "bun remove -g @bloxystudios/bloxycode",
+      yarn: "yarn global remove @bloxystudios/bloxycode",
       brew: "brew uninstall bloxycode",
       choco: "choco uninstall bloxycode",
       scoop: "scoop uninstall bloxycode",
@@ -179,13 +179,13 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
 
   if (method !== "curl" && method !== "unknown") {
     const cmds: Record<string, string[]> = {
-      npm: ["npm", "uninstall", "-g", "opencode-ai"],
-      pnpm: ["pnpm", "uninstall", "-g", "opencode-ai"],
-      bun: ["bun", "remove", "-g", "opencode-ai"],
-      yarn: ["yarn", "global", "remove", "opencode-ai"],
-      brew: ["brew", "uninstall", "opencode"],
-      choco: ["choco", "uninstall", "opencode"],
-      scoop: ["scoop", "uninstall", "opencode"],
+      npm: ["npm", "uninstall", "-g", "@bloxystudios/bloxycode"],
+      pnpm: ["pnpm", "uninstall", "-g", "@bloxystudios/bloxycode"],
+      bun: ["bun", "remove", "-g", "@bloxystudios/bloxycode"],
+      yarn: ["yarn", "global", "remove", "@bloxystudios/bloxycode"],
+      brew: ["brew", "uninstall", "bloxycode"],
+      choco: ["choco", "uninstall", "bloxycode"],
+      scoop: ["scoop", "uninstall", "bloxycode"],
     }
 
     const cmd = cmds[method]
@@ -270,7 +270,7 @@ async function getShellConfigFile(): Promise<string | null> {
     const content = await Bun.file(file)
       .text()
       .catch(() => "")
-    if (content.includes("# opencode") || content.includes(".bloxycode/bin")) {
+    if (content.includes("# bloxycode") || content.includes("# opencode") || content.includes(".bloxycode/bin")) {
       return file
     }
   }
@@ -288,7 +288,7 @@ async function cleanShellConfig(file: string) {
   for (const line of lines) {
     const trimmed = line.trim()
 
-    if (trimmed === "# opencode") {
+    if (trimmed === "# bloxycode" || trimmed === "# opencode") {
       skip = true
       continue
     }

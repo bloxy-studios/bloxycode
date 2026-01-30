@@ -1,0 +1,10 @@
+Add a new rule to the project configuration.
+
+Argument: $ARGUMENTS
+
+1. Read `.bloxycode/bloxycode.json` (or .jsonc).
+2. If the file doesn't exist, stop and ask the user to run `/bloxy-init` first.
+3. Parse the JSON content.
+4. Add the argument string to the `rules` array. If the `rules` array doesn't exist, create it.
+5. Save the updated file.
+6. Confirm to the user that the rule has been added: "Added rule: [rule]".

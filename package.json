@@ -14,17 +14,17 @@
     "url": "https://github.com/bloxystudios/bloxycode/issues"
   },
   "optionalDependencies": {
-    "bloxycode-darwin-arm64": "1.0.2",
-    "bloxycode-darwin-x64": "1.0.2",
-    "bloxycode-darwin-x64-baseline": "1.0.2",
-    "bloxycode-linux-arm64": "1.0.2",
-    "bloxycode-linux-x64": "1.0.2",
-    "bloxycode-linux-x64-baseline": "1.0.2",
-    "bloxycode-linux-arm64-musl": "1.0.2",
-    "bloxycode-linux-x64-musl": "1.0.2",
-    "bloxycode-linux-x64-baseline-musl": "1.0.2",
-    "bloxycode-windows-x64": "1.0.2",
-    "bloxycode-windows-x64-baseline": "1.0.2"
+    "@bloxystudios/bloxycode-darwin-arm64": "1.0.2",
+    "@bloxystudios/bloxycode-darwin-x64": "1.0.2",
+    "@bloxystudios/bloxycode-darwin-x64-baseline": "1.0.2",
+    "@bloxystudios/bloxycode-linux-arm64": "1.0.2",
+    "@bloxystudios/bloxycode-linux-x64": "1.0.2",
+    "@bloxystudios/bloxycode-linux-x64-baseline": "1.0.2",
+    "@bloxystudios/bloxycode-linux-arm64-musl": "1.0.2",
+    "@bloxystudios/bloxycode-linux-x64-musl": "1.0.2",
+    "@bloxystudios/bloxycode-linux-x64-baseline-musl": "1.0.2",
+    "@bloxystudios/bloxycode-windows-x64": "1.0.2",
+    "@bloxystudios/bloxycode-windows-x64-baseline": "1.0.2"
   },
   "resolutions": {
     "zod": "4.1.8",

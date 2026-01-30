@@ -49,7 +49,7 @@ function detectPlatformAndArch() {
 
 function findBinary() {
   const { platform, arch } = detectPlatformAndArch()
-  const packageName = `bloxycode-${platform}-${arch}`
+  const packageName = `@bloxystudios/bloxycode-${platform}-${arch}`
   const binaryName = platform === "windows" ? "bloxycode.exe" : "bloxycode"
 
   try {
@@ -112,6 +112,10 @@ async function main() {
     console.log(`Platform binary verified at: ${binaryPath}`)
     console.log("Wrapper script will handle binary execution")
   } catch (error) {
+    if (fs.existsSync(path.join(__dirname, "build.ts"))) {
+       console.log("Development environment detected. Skipping binary verification.");
+       process.exit(0);
+    }
     console.error("Failed to setup bloxycode binary:", error.message)
     process.exit(1)
   }

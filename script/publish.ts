@@ -22,9 +22,9 @@ await $`cp ./script/postinstall.mjs ./dist/${pkg.name}/postinstall.mjs`
 await Bun.file(`./dist/${pkg.name}/package.json`).write(
   JSON.stringify(
     {
-      name: pkg.name + "-ai",
+      name: pkg.name,
       bin: {
-        [pkg.name]: `./bin/${pkg.name}`,
+        "bloxycode": "./bin/bloxycode",
       },
       scripts: {
         postinstall: "bun ./postinstall.mjs || node ./postinstall.mjs",

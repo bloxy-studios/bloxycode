@@ -1,0 +1,35 @@
+Start autonomous task execution from a YAML file: $1
+
+The YAML file should have this format:
+
+```yaml
+# Optional project metadata
+name: "My Project Tasks"
+description: "Tasks for feature implementation"
+
+# Required tasks array
+tasks:
+  - title: "Create user authentication"
+    description: "Implement login and signup endpoints with JWT tokens"
+    completed: false
+
+  - title: "Add password reset flow"
+    description: "Email-based password reset with secure tokens"
+    completed: false
+
+  - title: "Write auth tests"
+    completed: false  # description is optional
+```
+
+Steps:
+1. Read and parse the YAML file at path $1
+2. Validate the structure (must have `tasks` array)
+3. Use the bloxy_init tool to initialize the session with the parsed tasks
+4. Execute tasks sequentially as in normal `/bloxy` mode
+5. Update task `completed` status in the YAML file as tasks complete
+
+If no path is provided, look for `tasks.yaml` or `tasks.yml` in the current directory.
+
+Example usage:
+- `/bloxy-yaml tasks.yaml`
+- `/bloxy-yaml project/sprint-tasks.yml`

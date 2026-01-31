@@ -1,0 +1,40 @@
+Preview Bloxy execution without making any changes.
+
+Path: $1 (defaults to PRD.md if not provided)
+
+This is a simulation mode that shows what would happen without actually executing:
+
+1. Parse the PRD file at $1 (or PRD.md)
+2. Display parsing results:
+   - Total tasks found
+   - Pending tasks (to be executed)
+   - Completed tasks (will be skipped)
+   - Deferred tasks (will be skipped)
+
+3. For each pending task, show:
+   - Task number and title
+   - Task description/body (if available)
+   - What actions would be taken
+
+4. Display configuration that would be used:
+   - Test command (if tests enabled)
+   - Lint command (if lint enabled)
+   - Auto-commit status
+   - Max retries setting
+
+5. Show estimated execution plan:
+   - "Would execute N tasks"
+   - "Would run tests after each task" (if enabled)
+   - "Would commit after each task" (if enabled)
+
+6. Do NOT:
+   - Execute any tasks
+   - Modify any files
+   - Create any commits
+   - Update the PRD file
+
+Use this to verify your PRD and configuration before running `/bloxy`.
+
+Example usage:
+- `/bloxy-dry-run` - Preview with default PRD.md
+- `/bloxy-dry-run tasks.md` - Preview with custom file

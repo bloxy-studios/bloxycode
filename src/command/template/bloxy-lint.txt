@@ -1,0 +1,17 @@
+Configure lint execution for Bloxy mode.
+
+Argument: $ARGUMENTS (expected: "on", "off", "true", "false")
+
+1. Read `.bloxycode/bloxycode.json` (or `.bloxycode/bloxycode.jsonc`).
+2. If the file doesn't exist, inform the user and suggest running `/bloxy-init` first.
+3. Update `config.runLint` based on the argument:
+   - "on", "true" -> true (lint will run after each task)
+   - "off", "false" -> false (lint will be skipped)
+   - If no argument is provided, display the current setting.
+4. Save the configuration file.
+5. Confirm to the user: "Lint execution: [enabled/disabled]"
+
+Example usage:
+- `/bloxy-lint off` - Disable lint
+- `/bloxy-lint on` - Enable lint
+- `/bloxy-lint` - Show current setting

@@ -1,0 +1,20 @@
+Configure auto-commit for Bloxy mode.
+
+Argument: $ARGUMENTS (expected: "on", "off", "true", "false")
+
+1. Read `.bloxycode/bloxycode.json` (or `.bloxycode/bloxycode.jsonc`).
+2. If the file doesn't exist, inform the user and suggest running `/bloxy-init` first.
+3. Update `config.autoCommit` based on the argument:
+   - "on", "true" -> true (automatically commit after each completed task)
+   - "off", "false" -> false (no automatic commits)
+   - If no argument is provided, display the current setting.
+4. Save the configuration file.
+5. Confirm to the user: "Auto-commit: [enabled/disabled]"
+
+When enabled, Bloxy will automatically create a git commit after successfully completing each task.
+The commit message will include the task title and a brief summary.
+
+Example usage:
+- `/bloxy-commit on` - Enable auto-commit
+- `/bloxy-commit off` - Disable auto-commit
+- `/bloxy-commit` - Show current setting

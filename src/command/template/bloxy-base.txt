@@ -1,0 +1,23 @@
+Set the base branch for Bloxy PR operations.
+
+Argument: $ARGUMENTS (branch name, e.g., "main", "develop", "staging")
+
+1. Read `.bloxycode/bloxycode.json` (or `.bloxycode/bloxycode.jsonc`).
+2. If the file doesn't exist, inform the user and suggest running `/bloxy-init` first.
+3. Update `config.baseBranch` based on the argument:
+   - If a branch name is provided, set it as the base branch
+   - If no argument is provided, display the current setting
+   - If empty string "", auto-detect from remote (default behavior)
+4. Save the configuration file.
+5. Confirm to the user: "Base branch: [branch-name]" or "Base branch: auto-detect"
+
+The base branch is used for:
+- Creating new branches (branches off from base)
+- PR target (PRs will merge into base)
+- Conflict detection
+
+Example usage:
+- `/bloxy-base develop` - Set base branch to develop
+- `/bloxy-base main` - Set base branch to main
+- `/bloxy-base` - Show current setting
+- `/bloxy-base ""` - Reset to auto-detect

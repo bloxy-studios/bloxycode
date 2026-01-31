@@ -1,0 +1,23 @@
+Configure branch-per-task mode for Bloxy.
+
+Argument: $ARGUMENTS (expected: "on", "off", "true", "false")
+
+1. Read `.bloxycode/bloxycode.json` (or `.bloxycode/bloxycode.jsonc`).
+2. If the file doesn't exist, inform the user and suggest running `/bloxy-init` first.
+3. Update `config.branchPerTask` based on the argument:
+   - "on", "true" -> true (create a new branch for each task)
+   - "off", "false" -> false (work on current branch)
+   - If no argument is provided, display the current setting.
+4. Save the configuration file.
+5. Confirm to the user: "Branch per task: [enabled/disabled]"
+
+When enabled:
+- Each task execution starts by creating a new branch
+- Branch naming: `bloxy/task-{N}-{task-title-slug}`
+- After task completion, the branch is ready for PR
+- Use with `/bloxy-pr` to create PRs for each task
+
+Example usage:
+- `/bloxy-branch on` - Enable branch per task
+- `/bloxy-branch off` - Disable branch per task
+- `/bloxy-branch` - Show current setting

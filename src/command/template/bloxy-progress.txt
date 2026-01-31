@@ -1,0 +1,35 @@
+Show detailed progress log for Bloxy sessions.
+
+Display execution history from `.bloxycode/bloxy-state.json` and `.bloxycode/progress.txt`:
+
+1. **Current Session** (from bloxy-state.json):
+   - PRD file being executed
+   - Session status (running/paused/completed/failed)
+   - Progress: X/Y tasks completed (Z%)
+   - Current task (if running)
+
+2. **Task History**:
+   For each task in the session:
+   - Task title
+   - Status (pending/in_progress/completed/failed)
+   - Completion summary (if completed)
+   - Error message (if failed)
+   - Retry count (if retried)
+
+3. **Execution Statistics**:
+   - Total tasks
+   - Completed successfully
+   - Failed
+   - Skipped/Deferred
+   - Success rate percentage
+
+4. **Session Timeline** (from progress.txt if available):
+   - Session start time
+   - Task completion timestamps
+   - Total execution duration
+
+If no session exists, suggest:
+"No Bloxy session found. Start one with `/bloxy PRD.md`"
+
+Example usage:
+- `/bloxy-progress` - Show full progress report

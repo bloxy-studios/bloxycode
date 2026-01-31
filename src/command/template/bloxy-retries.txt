@@ -1,0 +1,20 @@
+Configure maximum retry attempts for Bloxy mode.
+
+Argument: $ARGUMENTS (expected: a number, e.g., "3", "5", "0")
+
+1. Read `.bloxycode/bloxycode.json` (or `.bloxycode/bloxycode.jsonc`).
+2. If the file doesn't exist, inform the user and suggest running `/bloxy-init` first.
+3. Parse the argument as a number:
+   - If valid number >= 0, set `config.maxRetries` to that value
+   - If "0", tasks will not be retried on failure
+   - If no argument is provided, display the current setting
+   - If invalid, show an error and the current value
+4. Save the configuration file.
+5. Confirm to the user: "Max retries: [N]"
+
+Default is 3 retries. Set to 0 to disable retries entirely.
+
+Example usage:
+- `/bloxy-retries 5` - Set max retries to 5
+- `/bloxy-retries 0` - Disable retries
+- `/bloxy-retries` - Show current setting

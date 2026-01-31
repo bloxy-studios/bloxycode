@@ -1,42 +1,119 @@
 Analyze the current project and perform a complete initialization for the Bloxy agent.
 
-1. **Create `PRD.md`** in ${path} (if it doesn't exist):
-   Use this format:
-   ```markdown
-   # Project Requirements Document
+## Step 0: Detect Project Configuration
 
-   ## Overview
-   [Brief description of the project goal]
+Analyze the project to auto-detect settings:
 
-   ## Tasks
-   - [ ] Task 1: [Description]
-   - [ ] Task 2: [Description]
-   ...
-   ```
-   If arguments are provided ("$ARGUMENTS"), use them to populate the tasks. Otherwise, create generic tasks relevant to the codebase.
+**Language Detection:**
+- Check for `tsconfig.json` → TypeScript
+- Check for `pyproject.toml` or `requirements.txt` → Python
+- Check for `go.mod` → Go
+- Check for `Cargo.toml` → Rust
+- Check for `package.json` without tsconfig → JavaScript
 
-2. **Create `.bloxycode/bloxycode.json`** (if it doesn't exist):
-   Initialize with this default configuration:
-   ```json
-   {
-     "agent": {
-       "bloxy": {
-         "description": "Autonomous task executor",
-         "mode": "primary",
-         "permission": {
-           "*": "allow",
-           "question": "deny"
-         }
-       }
-     },
-     "rules": [
-       "Follow the existing code style and patterns",
-       "Ensure all tests pass before completing a task"
-     ],
-     "capabilities": {
-       "browser": "auto"
-     }
-   }
-   ```
+**Framework Detection (from package.json dependencies):**
+- `next` → Next.js
+- `@remix-run/react` → Remix
+- `nuxt` → Nuxt
+- `svelte` → Svelte
+- `@nestjs/core` → NestJS
+- `hono` → Hono
+- `fastify` → Fastify
+- `express` → Express
+- `react` (without meta-framework) → React
+- `vue` (without meta-framework) → Vue
 
-Report back which files were created or if they already existed.
+**Python frameworks (from pyproject.toml/requirements.txt):**
+- `fastapi` → FastAPI
+- `django` → Django
+- `flask` → Flask
+
+**Command Detection:**
+- Test: Check `package.json` scripts for "test", or detect `pytest`, `go test`, `cargo test`
+- Lint: Check `package.json` scripts for "lint", or detect `ruff`, `golangci-lint`, `cargo clippy`
+- Build: Check `package.json` scripts for "build"
+
+Display detected configuration to the user.
+
+## Step 1: Create `PRD.md` (if it doesn't exist)
+
+Create in the current directory with this format:
+
+```markdown
+# Project Requirements Document
+
+## Overview
+[Brief description of the project goal]
+
+## Tasks
+- [ ] Task 1: [Description]
+- [ ] Task 2: [Description]
+```
+
+If arguments are provided ("$ARGUMENTS"), use them to populate the tasks.
+Otherwise, create placeholder tasks relevant to the detected project type.
+
+## Step 2: Create `.bloxycode/bloxycode.json`
+
+Create the directory and config file with auto-detected values:
+
+```json
+{
+  "project": {
+    "name": "[detected from package.json or folder name]",
+    "language": "[detected language]",
+    "framework": "[detected framework]"
+  },
+  "commands": {
+    "test": "[detected test command]",
+    "lint": "[detected lint command]",
+    "build": "[detected build command]"
+  },
+  "config": {
+    "runTests": true,
+    "runLint": true,
+    "autoCommit": false,
+    "maxRetries": 3,
+    "retryDelay": 5000,
+    "branchPerTask": false,
+    "baseBranch": "",
+    "verbose": false
+  },
+  "agent": {
+    "bloxy": {
+      "description": "Autonomous task executor",
+      "mode": "primary",
+      "permission": {
+        "*": "allow",
+        "question": "deny"
+      }
+    }
+  },
+  "rules": [
+    "Follow the existing code style and patterns",
+    "Ensure all tests pass before completing a task"
+  ],
+  "capabilities": {
+    "browser": "auto"
+  },
+  "boundaries": {
+    "neverTouch": [
+      ".git/",
+      "node_modules/",
+      ".env",
+      "*.lock"
+    ]
+  }
+}
+```
+
+## Step 3: Report Results
+
+Display:
+- Detected project configuration (language, framework, commands)
+- Files created or updated
+- Suggested next steps:
+  - "Edit PRD.md to add your tasks"
+  - "Run `/bloxy PRD.md` to start execution"
+  - "Use `/bloxy-config` to view settings"
+  - "Use `/bloxy-rule [rule]` to add custom rules"

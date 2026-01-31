@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.1.0] - 2026-01-31
+
+### Added
+- Added 14 new Bloxy slash commands for configuration, task sources, Git/PR integration, and utilities
+
+## [1.0.15] - 2026-01-31
+
+### Added
+- Added fallback AI models for release notes generation
+
 ## [1.0.14] - 2026-01-31
 
 ### Fixed

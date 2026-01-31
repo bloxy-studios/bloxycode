@@ -1,0 +1,23 @@
+Configure verbose output for Bloxy mode.
+
+Argument: $ARGUMENTS (expected: "on", "off", "true", "false")
+
+1. Read `.bloxycode/bloxycode.json` (or `.bloxycode/bloxycode.jsonc`).
+2. If the file doesn't exist, inform the user and suggest running `/bloxy-init` first.
+3. Update `config.verbose` based on the argument:
+   - "on", "true" -> true (detailed logging during execution)
+   - "off", "false" -> false (minimal output)
+   - If no argument is provided, display the current setting.
+4. Save the configuration file.
+5. Confirm to the user: "Verbose output: [enabled/disabled]"
+
+When enabled, Bloxy will output detailed information during task execution including:
+- Task parsing details
+- Tool invocations
+- Test/lint output
+- Timing information
+
+Example usage:
+- `/bloxy-verbose on` - Enable verbose output
+- `/bloxy-verbose off` - Disable verbose output
+- `/bloxy-verbose` - Show current setting

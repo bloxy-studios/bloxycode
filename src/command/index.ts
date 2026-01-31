@@ -14,6 +14,24 @@ import PROMPT_BLOXY_BROWSER from "./template/bloxy-browser.txt"
 import PROMPT_BLOXY_STATUS from "./template/bloxy-status.txt"
 import PROMPT_BLOXY_RESUME from "./template/bloxy-resume.txt"
 import PROMPT_BLOXY_VALIDATE from "./template/bloxy-validate.txt"
+// New configuration commands
+import PROMPT_BLOXY_TESTS from "./template/bloxy-tests.txt"
+import PROMPT_BLOXY_LINT from "./template/bloxy-lint.txt"
+import PROMPT_BLOXY_COMMIT from "./template/bloxy-commit.txt"
+import PROMPT_BLOXY_VERBOSE from "./template/bloxy-verbose.txt"
+import PROMPT_BLOXY_RETRIES from "./template/bloxy-retries.txt"
+import PROMPT_BLOXY_FAST from "./template/bloxy-fast.txt"
+// New task source commands
+import PROMPT_BLOXY_TASK from "./template/bloxy-task.txt"
+import PROMPT_BLOXY_YAML from "./template/bloxy-yaml.txt"
+import PROMPT_BLOXY_JSON from "./template/bloxy-json.txt"
+// New Git/PR commands
+import PROMPT_BLOXY_PR from "./template/bloxy-pr.txt"
+import PROMPT_BLOXY_BRANCH from "./template/bloxy-branch.txt"
+import PROMPT_BLOXY_BASE from "./template/bloxy-base.txt"
+// New utility commands
+import PROMPT_BLOXY_DRY_RUN from "./template/bloxy-dry-run.txt"
+import PROMPT_BLOXY_PROGRESS from "./template/bloxy-progress.txt"
 import { MCP } from "../mcp"
 
 export namespace Command {
@@ -71,6 +89,24 @@ export namespace Command {
     BLOXY_STATUS: "bloxy-status",
     BLOXY_RESUME: "bloxy-resume",
     BLOXY_VALIDATE: "bloxy-validate",
+    // Configuration commands
+    BLOXY_TESTS: "bloxy-tests",
+    BLOXY_LINT: "bloxy-lint",
+    BLOXY_COMMIT: "bloxy-commit",
+    BLOXY_VERBOSE: "bloxy-verbose",
+    BLOXY_RETRIES: "bloxy-retries",
+    BLOXY_FAST: "bloxy-fast",
+    // Task source commands
+    BLOXY_TASK: "bloxy-task",
+    BLOXY_YAML: "bloxy-yaml",
+    BLOXY_JSON: "bloxy-json",
+    // Git/PR commands
+    BLOXY_PR: "bloxy-pr",
+    BLOXY_BRANCH: "bloxy-branch",
+    BLOXY_BASE: "bloxy-base",
+    // Utility commands
+    BLOXY_DRY_RUN: "bloxy-dry-run",
+    BLOXY_PROGRESS: "bloxy-progress",
   } as const
 
   const state = Instance.state(async () => {
@@ -129,7 +165,7 @@ export namespace Command {
       },
       [Default.BLOXY_GH]: {
         name: Default.BLOXY_GH,
-        description: "create PRD from GitHub issues [repo]",
+        description: "create PRD from GitHub issues [repo] [label]",
         get template() {
           return PROMPT_BLOXY_GH
         },
@@ -167,6 +203,125 @@ export namespace Command {
           return PROMPT_BLOXY_VALIDATE
         },
         hints: hints(PROMPT_BLOXY_VALIDATE),
+      },
+      // Configuration commands
+      [Default.BLOXY_TESTS]: {
+        name: Default.BLOXY_TESTS,
+        description: "toggle test execution [on|off]",
+        get template() {
+          return PROMPT_BLOXY_TESTS
+        },
+        hints: hints(PROMPT_BLOXY_TESTS),
+      },
+      [Default.BLOXY_LINT]: {
+        name: Default.BLOXY_LINT,
+        description: "toggle lint execution [on|off]",
+        get template() {
+          return PROMPT_BLOXY_LINT
+        },
+        hints: hints(PROMPT_BLOXY_LINT),
+      },
+      [Default.BLOXY_COMMIT]: {
+        name: Default.BLOXY_COMMIT,
+        description: "toggle auto-commit [on|off]",
+        get template() {
+          return PROMPT_BLOXY_COMMIT
+        },
+        hints: hints(PROMPT_BLOXY_COMMIT),
+      },
+      [Default.BLOXY_VERBOSE]: {
+        name: Default.BLOXY_VERBOSE,
+        description: "toggle verbose output [on|off]",
+        get template() {
+          return PROMPT_BLOXY_VERBOSE
+        },
+        hints: hints(PROMPT_BLOXY_VERBOSE),
+      },
+      [Default.BLOXY_RETRIES]: {
+        name: Default.BLOXY_RETRIES,
+        description: "set max retry attempts [N]",
+        get template() {
+          return PROMPT_BLOXY_RETRIES
+        },
+        hints: hints(PROMPT_BLOXY_RETRIES),
+      },
+      [Default.BLOXY_FAST]: {
+        name: Default.BLOXY_FAST,
+        description: "enable fast mode (skip tests and lint)",
+        get template() {
+          return PROMPT_BLOXY_FAST
+        },
+        hints: [],
+      },
+      // Task source commands
+      [Default.BLOXY_TASK]: {
+        name: Default.BLOXY_TASK,
+        description: "execute a single task directly [task]",
+        agent: "bloxy",
+        get template() {
+          return PROMPT_BLOXY_TASK
+        },
+        hints: hints(PROMPT_BLOXY_TASK),
+      },
+      [Default.BLOXY_YAML]: {
+        name: Default.BLOXY_YAML,
+        description: "start autonomous execution from YAML file [path]",
+        agent: "bloxy",
+        get template() {
+          return PROMPT_BLOXY_YAML
+        },
+        hints: hints(PROMPT_BLOXY_YAML),
+      },
+      [Default.BLOXY_JSON]: {
+        name: Default.BLOXY_JSON,
+        description: "start autonomous execution from JSON file [path]",
+        agent: "bloxy",
+        get template() {
+          return PROMPT_BLOXY_JSON
+        },
+        hints: hints(PROMPT_BLOXY_JSON),
+      },
+      // Git/PR commands
+      [Default.BLOXY_PR]: {
+        name: Default.BLOXY_PR,
+        description: "create pull request for Bloxy changes [--draft]",
+        get template() {
+          return PROMPT_BLOXY_PR
+        },
+        hints: hints(PROMPT_BLOXY_PR),
+      },
+      [Default.BLOXY_BRANCH]: {
+        name: Default.BLOXY_BRANCH,
+        description: "toggle branch-per-task mode [on|off]",
+        get template() {
+          return PROMPT_BLOXY_BRANCH
+        },
+        hints: hints(PROMPT_BLOXY_BRANCH),
+      },
+      [Default.BLOXY_BASE]: {
+        name: Default.BLOXY_BASE,
+        description: "set base branch for PRs [branch]",
+        get template() {
+          return PROMPT_BLOXY_BASE
+        },
+        hints: hints(PROMPT_BLOXY_BASE),
+      },
+      // Utility commands
+      [Default.BLOXY_DRY_RUN]: {
+        name: Default.BLOXY_DRY_RUN,
+        description: "preview execution without making changes [path]",
+        get template() {
+          return PROMPT_BLOXY_DRY_RUN
+        },
+        hints: hints(PROMPT_BLOXY_DRY_RUN),
+      },
+      [Default.BLOXY_PROGRESS]: {
+        name: Default.BLOXY_PROGRESS,
+        description: "show detailed progress log",
+        get template() {
+          return PROMPT_BLOXY_PROGRESS
+        },
+        hints: [],
       },
     }
 

@@ -1,0 +1,27 @@
+Execute a single task directly without a PRD file.
+
+Task: $ARGUMENTS
+
+This is "brownfield mode" - execute one task autonomously and complete.
+
+Steps:
+1. Read the current configuration from `.bloxycode/bloxycode.json` (if it exists)
+2. Create an in-memory task from the provided description
+3. Execute the task following the bloxy agent workflow:
+   - Understand the task requirements
+   - Plan the implementation approach
+   - Implement the task completely
+   - Run tests if `config.runTests` is enabled
+   - Run lint if `config.runLint` is enabled
+   - Commit changes if `config.autoCommit` is enabled
+4. Report completion with a summary of what was done
+
+No PRD file is created or modified. This is a one-shot execution.
+No state is saved to `.bloxycode/bloxy-state.json`.
+
+Use this command for quick, isolated tasks that don't need tracking.
+
+Example usage:
+- `/bloxy-task Add a dark mode toggle to the settings page`
+- `/bloxy-task Fix the login form validation bug`
+- `/bloxy-task Create unit tests for the auth module`

@@ -1,0 +1,38 @@
+Create a pull request for the current Bloxy session changes.
+
+Argument: $1 (optional: "--draft" to create as draft PR)
+
+Steps:
+1. Verify the `gh` CLI tool is available.
+
+2. Check for uncommitted changes:
+   - Run `git status --porcelain`
+   - If there are changes, create a commit with a summary message
+   - Use task summaries from `.bloxycode/bloxy-state.json` if available
+
+3. Get current branch name:
+   - Run `git branch --show-current`
+   - If on main/master/develop, create a new branch first:
+     `git checkout -b bloxy/tasks-[timestamp]`
+
+4. Push current branch to remote:
+   - Run `git push -u origin [branch-name]`
+
+5. Read Bloxy state to generate PR content:
+   - Load `.bloxycode/bloxy-state.json`
+   - Count completed/total tasks
+   - Gather task summaries
+
+6. Create PR using `gh pr create`:
+   - Title: "Bloxy: [N] tasks completed from [PRD filename]"
+   - Body: Include task list with completion status and summaries
+   - If $1 is "--draft", add the `--draft` flag
+
+7. Return the PR URL to the user.
+
+If no bloxy state exists, inform the user:
+"No Bloxy session found. Run `/bloxy PRD.md` first to execute tasks."
+
+Example usage:
+- `/bloxy-pr` - Create a PR for completed work
+- `/bloxy-pr --draft` - Create a draft PR for review

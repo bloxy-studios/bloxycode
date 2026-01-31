@@ -1,0 +1,17 @@
+Enable fast mode for Bloxy - skip both tests and lint.
+
+This is a convenience command that disables both test and lint execution.
+Equivalent to running `/bloxy-tests off` and `/bloxy-lint off`.
+
+1. Read `.bloxycode/bloxycode.json` (or `.bloxycode/bloxycode.jsonc`).
+2. If the file doesn't exist, inform the user and suggest running `/bloxy-init` first.
+3. Set both `config.runTests` and `config.runLint` to false.
+4. Save the configuration file.
+5. Confirm: "Fast mode enabled: Tests and lint disabled"
+
+To re-enable tests and lint, use:
+- `/bloxy-tests on`
+- `/bloxy-lint on`
+
+Example usage:
+- `/bloxy-fast` - Enable fast mode (skip tests and lint)

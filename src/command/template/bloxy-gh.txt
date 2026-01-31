@@ -1,23 +1,45 @@
 Create a PRD from GitHub Issues.
 
-Repository: $ARGUMENTS (e.g., owner/repo)
+Arguments:
+- $1: Repository (e.g., owner/repo) [required]
+- $2: Label filter (e.g., "bug", "feature", "enhancement") [optional]
 
-1. Verify the `gh` CLI tool is available.
-2. Use `gh issue list --repo $ARGUMENTS --state open --limit 20 --json number,title,body` to fetch issues.
-3. Create (or overwrite) `PRD.md` with the following content:
+Steps:
+1. Verify the `gh` CLI tool is available by running `gh --version`.
+   If not installed, inform the user to install it from https://cli.github.com/
+
+2. Build the GitHub CLI command:
+   - Base: `gh issue list --repo $1 --state open --limit 20 --json number,title,body,labels`
+   - If $2 (label) is provided, add: `--label "$2"`
+
+3. Execute the command and parse the JSON response.
+
+4. Create (or overwrite) `PRD.md` with the following content:
 
    ```markdown
    # Project Requirements Document (from GitHub)
 
    ## Overview
-   Tasks imported from $ARGUMENTS
+   Tasks imported from $1
+   Filter: $2 (or "all open issues" if no filter)
+   Generated: [current date/time]
 
    ## Tasks
+   - [ ] #<number> <title>
+     > <body excerpt if available>
    ```
 
-4. For each issue fetched, append a task entry:
-   `- [ ] #<number> <title>`
+5. For each issue fetched, append a task entry with:
+   - Issue number as reference
+   - Issue title
+   - First 200 chars of body as indented description (if body exists)
 
-5. If the body of the issue is not empty, include it as a comment or sub-description indented under the task.
+6. Report back:
+   - Number of issues imported
+   - Label filter used (if any)
+   - Path to created PRD file
 
-Report back the number of issues imported into the PRD.
+Example usage:
+- `/bloxy-gh owner/repo` - Import all open issues
+- `/bloxy-gh owner/repo bug` - Import only issues labeled "bug"
+- `/bloxy-gh owner/repo "good first issue"` - Import beginner-friendly issues

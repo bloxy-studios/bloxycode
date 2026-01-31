@@ -1,0 +1,17 @@
+Configure test execution for Bloxy mode.
+
+Argument: $ARGUMENTS (expected: "on", "off", "true", "false")
+
+1. Read `.bloxycode/bloxycode.json` (or `.bloxycode/bloxycode.jsonc`).
+2. If the file doesn't exist, inform the user and suggest running `/bloxy-init` first.
+3. Update `config.runTests` based on the argument:
+   - "on", "true" -> true (tests will run after each task)
+   - "off", "false" -> false (tests will be skipped)
+   - If no argument is provided, display the current setting.
+4. Save the configuration file.
+5. Confirm to the user: "Test execution: [enabled/disabled]"
+
+Example usage:
+- `/bloxy-tests off` - Disable tests
+- `/bloxy-tests on` - Enable tests
+- `/bloxy-tests` - Show current setting

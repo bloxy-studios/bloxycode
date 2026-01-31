@@ -1,6 +1,6 @@
 # BloxyCode
 
-[![Version](https://img.shields.io/badge/Version-1.0.13-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
+[![Version](https://img.shields.io/badge/Version-1.0.14-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
 [![Vibeathon 2026](https://img.shields.io/badge/Vibeathon-Feb%202026-purple?style=for-the-badge)](https://www.bridgemind.ai/vibeathon)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Bun](https://img.shields.io/badge/Bun-1.3+-black?style=for-the-badge)](https://bun.sh/)
@@ -262,6 +262,9 @@ Contributions are welcome! Please see our contributing guidelines for more detai
 MIT
 
 ## Changelog
+
+### 1.0.14 - 2026-01-31
+- **Bloxy Mode**: Fixed PRD file checkbox not updating when tasks complete, fixed missing task context injection, and fixed autonomous task continuation (republish)
 
 ### 1.0.13 - 2026-01-31
 - **Bloxy Mode**: Fixed PRD file checkbox not updating when tasks complete, fixed missing task context injection, and fixed autonomous task continuation

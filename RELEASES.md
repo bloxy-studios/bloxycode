@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.1.1] - 2026-01-31
+
+### Fixed
+- Fixed publish workflow - republish with all packages
+
 ## [1.1.0] - 2026-01-31
 
 ### Added

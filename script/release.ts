@@ -33,7 +33,14 @@ import pkg from "../package.json"
  */
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || ""
-const AI_MODEL = "qwen/qwen3-coder:free" // Free model on OpenRouter
+
+// Free models on OpenRouter (in order of preference)
+const AI_MODELS = [
+  "tngtech/deepseek-r1t2-chimera:free",
+  "arcee-ai/trinity-large-preview:free",
+  "z-ai/glm-4.5-air:free",
+  "qwen/qwen3-coder:free"
+]
 
 // Parse args
 const args = process.argv.slice(2)
@@ -105,53 +112,72 @@ ${diff}
 
 JSON RESPONSE:`
 
-  try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/bloxy-studios/bloxycode",
-        "X-Title": "BloxyCode Release Script"
-      },
-      body: JSON.stringify({
-        model: AI_MODEL,
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 200,
-        temperature: 0.3
+  // Try each model until one works
+  for (const model of AI_MODELS) {
+    try {
+      console.log(`   Trying ${model.split("/")[1]?.split(":")[0] || model}...`)
+
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://github.com/bloxy-studios/bloxycode",
+          "X-Title": "BloxyCode Release Script"
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [{ role: "user", content: prompt }],
+          max_tokens: 200,
+          temperature: 0.3
+        })
       })
-    })
 
-    if (!response.ok) {
-      const error = await response.text()
-      console.log(`   API error: ${response.status} - ${error}`)
-      return null
-    }
+      if (!response.ok) {
+        const error = await response.text()
+        // If rate limited, try next model
+        if (response.status === 429) {
+          console.log(`   Rate limited, trying next model...`)
+          continue
+        }
+        console.log(`   API error: ${response.status}`)
+        continue
+      }
 
-    const data = await response.json() as {
-      choices?: Array<{ message?: { content?: string } }>
-    }
-    const content = data.choices?.[0]?.message?.content?.trim() || ""
+      const data = await response.json() as {
+        choices?: Array<{ message?: { content?: string } }>
+      }
+      const content = data.choices?.[0]?.message?.content?.trim() || ""
 
-    // Parse JSON response
-    const jsonMatch = content.match(/\{[\s\S]*\}/)
-    if (jsonMatch) {
-      const parsed = JSON.parse(jsonMatch[0]) as { category?: string; message?: string }
-      if (parsed.message) {
-        console.log(`   ✓ AI generated: "${parsed.message}"`)
-        return {
-          message: parsed.message,
-          category: parsed.category || "Fixed"
+      // Parse JSON response
+      const jsonMatch = content.match(/\{[\s\S]*\}/)
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0]) as { category?: string; message?: string }
+        if (parsed.message) {
+          console.log(`   ✓ AI generated: "${parsed.message}"`)
+          return {
+            message: parsed.message,
+            category: parsed.category || "Fixed"
+          }
         }
       }
-    }
 
-    console.log("   Could not parse AI response")
-    return null
-  } catch (error) {
-    console.log(`   AI generation failed: ${error}`)
-    return null
+      // If we got a response but couldn't parse JSON, try to extract message
+      if (content && content.length > 10) {
+        console.log(`   ✓ AI generated: "${content.slice(0, 100)}..."`)
+        return {
+          message: content.slice(0, 200),
+          category: "Fixed"
+        }
+      }
+    } catch (error) {
+      console.log(`   Model failed, trying next...`)
+      continue
+    }
   }
+
+  console.log("   All models failed or rate limited")
+  return null
 }
 
 // If no message provided, try AI generation

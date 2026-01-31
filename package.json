@@ -41,7 +41,11 @@
     "format": "echo 'Formatting code...' && bun run --prettier --write src/**/*.ts",
     "docs": "echo 'Generating documentation...' && find src -name '*.ts' -exec echo 'Processing: {}' \\;",
     "deploy": "echo 'Deploying application...' && bun run build && echo 'Deployment completed successfully'",
-    "release": "bun run script/release.ts"
+    "release": "bun run script/release.ts",
+    "release:patch": "bun run script/release.ts --fixed",
+    "release:minor": "bun run script/release.ts --minor --added",
+    "release:major": "bun run script/release.ts --major --changed",
+    "release:dry": "bun run script/release.ts --dry-run"
   },
   "bin": {
     "bloxycode": "./bin/bloxycode"

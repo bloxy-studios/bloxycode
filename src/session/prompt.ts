@@ -46,6 +46,7 @@ import { LLM } from "./llm"
 import { iife } from "@/util/iife"
 import { Shell } from "@/shell/shell"
 import { Truncate } from "@/tool/truncation"
+import { BloxyRunner } from "../bloxy/runner"
 
 // @ts-ignore
 globalThis.AI_SDK_LOG_WARNINGS = false
@@ -1198,6 +1199,28 @@ export namespace SessionPrompt {
   async function insertReminders(input: { messages: MessageV2.WithParts[]; agent: Agent.Info; session: Session.Info }) {
     const userMessage = input.messages.findLast((msg) => msg.info.role === "user")
     if (!userMessage) return input.messages
+
+    // Handle bloxy agent - inject current task context
+    if (input.agent.name === "bloxy") {
+      const taskContext = await BloxyRunner.getTaskContext(input.session.id)
+
+      // If no task context and session is complete, finalize
+      if (!taskContext) {
+        await BloxyRunner.complete(input.session.id)
+        return input.messages
+      }
+
+      // Inject task context into conversation
+      userMessage.parts.push({
+        id: Identifier.ascending("part"),
+        messageID: userMessage.info.id,
+        sessionID: userMessage.info.sessionID,
+        type: "text",
+        text: taskContext,
+        synthetic: true,
+      })
+      return input.messages
+    }
 
     // Original logic when experimental plan mode is disabled
     if (!Flag.BLOXYCODE_EXPERIMENTAL_PLAN_MODE) {

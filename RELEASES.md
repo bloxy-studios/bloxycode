@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.0.13] - 2026-01-31
+
+### Fixed
+- **Bloxy Mode**: Fixed PRD file checkbox not updating when tasks complete, fixed missing task context injection, and fixed autonomous task continuation
+
 ## [1.0.9] - 2026-01-30
 
 ### Fixed

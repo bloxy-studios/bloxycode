@@ -1,6 +1,7 @@
 import z from "zod"
 import { Tool } from "./tool"
 import { BloxyState } from "../bloxy/state"
+import { BloxyParser } from "../bloxy/parser"
 import { BloxyEvent } from "../bloxy/event"
 import { Instance } from "../project/instance"
 import { Log } from "../util/log"
@@ -55,6 +56,9 @@ export const BloxyControlTool = Tool.define<
     switch (args.action) {
       case "task_complete": {
         await BloxyState.markComplete(worktree, session, task.id, args.summary)
+
+        // Update PRD file checkbox immediately (- [ ] → - [x])
+        await BloxyParser.markTaskInFile(session.prdPath, task.title)
 
         // Publish event for session loop to continue
         await Bus.publish(BloxyEvent.TaskComplete, { sessionID: ctx.sessionID, taskId: task.id, summary: args.summary })

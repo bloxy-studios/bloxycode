@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.2.0] - 2026-02-01
+
+### Added
+- Built-in Antigravity models now work out of the box - Claude Opus 4.5, Claude Sonnet 4.5, and Gemini 3 Pro/Flash models available under Google provider without user configuration
+
 ## [1.1.1] - 2026-01-31
 
 ### Fixed

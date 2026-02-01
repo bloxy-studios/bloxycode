@@ -39,6 +39,7 @@ import { createPerplexity } from "@ai-sdk/perplexity"
 import { createVercel } from "@ai-sdk/vercel"
 import { createGitLab } from "@gitlab/gitlab-ai-provider"
 import { ProviderTransform } from "./transform"
+import { loadAccounts as loadAntigravityAccounts } from "../plugin/antigravity/plugin/storage"
 
 export namespace Provider {
   const log = Log.create({ service: "provider" })
@@ -508,26 +509,6 @@ export namespace Provider {
         },
       }
     },
-    antigravity: async (input) => {
-      // Check if any Antigravity accounts are configured
-      const accountsPath = path.join(Global.Path.config, "antigravity-accounts.json")
-      const hasAccounts = await Bun.file(accountsPath)
-        .json()
-        .then((data: any) => data?.accounts?.length > 0)
-        .catch(() => false)
-
-      if (!hasAccounts) return { autoload: false }
-
-      return {
-        autoload: true,
-        options: {
-          baseURL: "https://autopush-aicompanion-pa.sandbox.googleapis.com",
-        },
-        async getModel(sdk: any, modelID: string) {
-          return sdk.languageModel(modelID)
-        },
-      }
-    },
   }
 
   export const Model = z
@@ -734,6 +715,172 @@ export namespace Provider {
       }
     }
 
+    // Add Antigravity models to google provider (via Google OAuth through the Antigravity plugin)
+    if (database["google"]) {
+      database["google"].models["antigravity-claude-opus-4-5"] = {
+        id: "antigravity-claude-opus-4-5",
+        providerID: "google",
+        name: "Claude Opus 4.5 (Antigravity)",
+        family: "claude",
+        api: {
+          id: "claude-opus-4-5-20251101",
+          url: "https://generativelanguage.googleapis.com",
+          npm: "@ai-sdk/google",
+        },
+        status: "active" as const,
+        headers: {},
+        options: {},
+        cost: { input: 0, output: 0, cache: { read: 0, write: 0 } },
+        limit: { context: 200000, output: 32000 },
+        capabilities: {
+          temperature: true,
+          reasoning: true,
+          attachment: true,
+          toolcall: true,
+          input: { text: true, audio: false, image: true, video: false, pdf: true },
+          output: { text: true, audio: false, image: false, video: false, pdf: false },
+          interleaved: true,
+        },
+        release_date: "2025-02-24",
+        variants: {},
+      }
+      database["google"].models["antigravity-claude-sonnet-4-5"] = {
+        id: "antigravity-claude-sonnet-4-5",
+        providerID: "google",
+        name: "Claude Sonnet 4.5 (Antigravity)",
+        family: "claude",
+        api: {
+          id: "claude-sonnet-4-5-20251101",
+          url: "https://generativelanguage.googleapis.com",
+          npm: "@ai-sdk/google",
+        },
+        status: "active" as const,
+        headers: {},
+        options: {},
+        cost: { input: 0, output: 0, cache: { read: 0, write: 0 } },
+        limit: { context: 200000, output: 16000 },
+        capabilities: {
+          temperature: true,
+          reasoning: true,
+          attachment: true,
+          toolcall: true,
+          input: { text: true, audio: false, image: true, video: false, pdf: true },
+          output: { text: true, audio: false, image: false, video: false, pdf: false },
+          interleaved: true,
+        },
+        release_date: "2025-02-24",
+        variants: {},
+      }
+      database["google"].models["antigravity-claude-sonnet-4-5-thinking"] = {
+        id: "antigravity-claude-sonnet-4-5-thinking",
+        providerID: "google",
+        name: "Claude Sonnet 4.5 Thinking (Antigravity)",
+        family: "claude",
+        api: {
+          id: "claude-sonnet-4-5-20251101",
+          url: "https://generativelanguage.googleapis.com",
+          npm: "@ai-sdk/google",
+        },
+        status: "active" as const,
+        headers: {},
+        options: { thinking: true },
+        cost: { input: 0, output: 0, cache: { read: 0, write: 0 } },
+        limit: { context: 200000, output: 16000 },
+        capabilities: {
+          temperature: true,
+          reasoning: true,
+          attachment: true,
+          toolcall: true,
+          input: { text: true, audio: false, image: true, video: false, pdf: true },
+          output: { text: true, audio: false, image: false, video: false, pdf: false },
+          interleaved: true,
+        },
+        release_date: "2025-02-24",
+        variants: {},
+      }
+      database["google"].models["antigravity-claude-opus-4-5-thinking"] = {
+        id: "antigravity-claude-opus-4-5-thinking",
+        providerID: "google",
+        name: "Claude Opus 4.5 Thinking (Antigravity)",
+        family: "claude",
+        api: {
+          id: "claude-opus-4-5-20251101",
+          url: "https://generativelanguage.googleapis.com",
+          npm: "@ai-sdk/google",
+        },
+        status: "active" as const,
+        headers: {},
+        options: { thinking: true },
+        cost: { input: 0, output: 0, cache: { read: 0, write: 0 } },
+        limit: { context: 200000, output: 32000 },
+        capabilities: {
+          temperature: true,
+          reasoning: true,
+          attachment: true,
+          toolcall: true,
+          input: { text: true, audio: false, image: true, video: false, pdf: true },
+          output: { text: true, audio: false, image: false, video: false, pdf: false },
+          interleaved: true,
+        },
+        release_date: "2025-02-24",
+        variants: {},
+      }
+      database["google"].models["antigravity-gemini-3-pro"] = {
+        id: "antigravity-gemini-3-pro",
+        providerID: "google",
+        name: "Gemini 3 Pro (Antigravity)",
+        family: "gemini",
+        api: {
+          id: "gemini-3-pro",
+          url: "https://generativelanguage.googleapis.com",
+          npm: "@ai-sdk/google",
+        },
+        status: "active" as const,
+        headers: {},
+        options: {},
+        cost: { input: 0, output: 0, cache: { read: 0, write: 0 } },
+        limit: { context: 1000000, output: 65536 },
+        capabilities: {
+          temperature: true,
+          reasoning: true,
+          attachment: true,
+          toolcall: true,
+          input: { text: true, audio: true, image: true, video: true, pdf: true },
+          output: { text: true, audio: false, image: false, video: false, pdf: false },
+          interleaved: false,
+        },
+        release_date: "2025-03-25",
+        variants: {},
+      }
+      database["google"].models["antigravity-gemini-3-flash"] = {
+        id: "antigravity-gemini-3-flash",
+        providerID: "google",
+        name: "Gemini 3 Flash (Antigravity)",
+        family: "gemini",
+        api: {
+          id: "gemini-3-flash",
+          url: "https://generativelanguage.googleapis.com",
+          npm: "@ai-sdk/google",
+        },
+        status: "active" as const,
+        headers: {},
+        options: {},
+        cost: { input: 0, output: 0, cache: { read: 0, write: 0 } },
+        limit: { context: 1000000, output: 65536 },
+        capabilities: {
+          temperature: true,
+          reasoning: true,
+          attachment: true,
+          toolcall: true,
+          input: { text: true, audio: true, image: true, video: true, pdf: true },
+          output: { text: true, audio: false, image: false, video: false, pdf: false },
+          interleaved: false,
+        },
+        release_date: "2025-03-25",
+        variants: {},
+      }
+    }
+
     function mergeProvider(providerID: string, provider: Partial<Info>) {
       const existing = providers[providerID]
       if (existing) {
@@ -853,7 +1000,9 @@ export namespace Provider {
       }
     }
 
-    for (const plugin of await Plugin.list()) {
+    const pluginList = await Plugin.list()
+
+    for (const plugin of pluginList) {
       if (!plugin.auth) continue
       const providerID = plugin.auth.provider
       if (disabled.has(providerID)) continue
@@ -869,6 +1018,17 @@ export namespace Provider {
         if (enterpriseAuth) hasAuth = true
       }
 
+      // Special handling for antigravity: the plugin registers as "google" but accounts are in antigravity file
+      // This allows OAuth to appear under "Google" while storing accounts separately
+      if (providerID === "google" && !hasAuth) {
+        try {
+          const antigravityData = await loadAntigravityAccounts()
+          if (antigravityData && antigravityData.accounts.length > 0) hasAuth = true
+        } catch {
+          // Accounts file doesn't exist or is invalid
+        }
+      }
+
       if (!hasAuth) continue
       if (!plugin.auth.loader) continue
 
@@ -878,6 +1038,58 @@ export namespace Provider {
         const opts = options ?? {}
         const patch: Partial<Info> = providers[providerID] ? { options: opts } : { source: "custom", options: opts }
         mergeProvider(providerID, patch)
+
+        // For google provider with antigravity auth, ALSO merge into the antigravity provider
+        // This ensures built-in antigravity models get the custom fetch with OAuth token
+        if (providerID === "google" && auth.type === "oauth") {
+          const antigravityPatch: Partial<Info> = providers["antigravity"] ? { options: opts } : { source: "custom", options: opts }
+          mergeProvider("antigravity", antigravityPatch)
+        }
+      }
+
+      // Special handling for antigravity: load with antigravity-specific getAuth and merge into BOTH google AND antigravity providers
+      // This allows Antigravity OAuth to work with:
+      // 1. Models defined under provider.google.models (custom config)
+      // 2. Built-in models under provider.antigravity (default antigravity models)
+      if (providerID === "google" && !auth) {
+        try {
+          const antigravityData = await loadAntigravityAccounts()
+          log.info("antigravity accounts check", {
+            count: antigravityData?.accounts?.length ?? 0,
+            hasAccounts: (antigravityData?.accounts?.length ?? 0) > 0
+          })
+          if (antigravityData && antigravityData.accounts.length > 0) {
+            log.info("loading antigravity plugin auth loader")
+            const options = await plugin.auth.loader(
+              async () => {
+                const data = await loadAntigravityAccounts()
+                if (!data || data.accounts.length === 0) return undefined
+                // Return a minimal auth object that the loader can use
+                return { apiKey: "antigravity-oauth" } as any
+              },
+              database["google"],
+            )
+            const opts = options ?? {}
+            log.info("antigravity plugin loader returned", {
+              hasOptions: !!opts,
+              hasFetch: !!opts["fetch"],
+              hasApiKey: !!opts["apiKey"],
+              keys: Object.keys(opts)
+            })
+
+            // Merge into google provider (for models in user config under provider.google.models)
+            const googlePatch: Partial<Info> = providers["google"] ? { options: opts } : { source: "custom", options: opts }
+            mergeProvider("google", googlePatch)
+            log.info("merged antigravity auth into google provider")
+
+            // ALSO merge into antigravity provider (for built-in antigravity models)
+            const antigravityPatch: Partial<Info> = providers["antigravity"] ? { options: opts } : { source: "custom", options: opts }
+            mergeProvider("antigravity", antigravityPatch)
+            log.info("merged antigravity auth into antigravity provider")
+          }
+        } catch (e) {
+          log.error("antigravity auth loading failed", { error: e instanceof Error ? e.message : String(e) })
+        }
       }
 
       // If this is github-copilot plugin, also register for github-copilot-enterprise if auth exists
@@ -985,6 +1197,14 @@ export namespace Provider {
       })
       const s = await state()
       const provider = s.providers[model.providerID]
+      log.info("getSDK provider state", {
+        providerID: model.providerID,
+        hasProvider: !!provider,
+        providerSource: provider?.source,
+        providerOptionsKeys: provider?.options ? Object.keys(provider.options) : [],
+        providerHasFetch: !!provider?.options?.["fetch"],
+        providerApiKey: provider?.options?.["apiKey"] ? String(provider.options["apiKey"]).substring(0, 20) : "undefined"
+      })
       const options = { ...provider.options }
 
       if (model.api.npm.includes("@ai-sdk/openai-compatible") && options["includeUsage"] !== false) {
@@ -999,11 +1219,25 @@ export namespace Provider {
           ...model.headers,
         }
 
-      const key = Bun.hash.xxHash32(JSON.stringify({ npm: model.api.npm, options }))
+      // Extract custom fetch before caching - functions can't be JSON serialized
+      const customFetch = options["fetch"]
+
+      log.info("getSDK options", {
+        providerID: model.providerID,
+        modelID: model.id,
+        hasFetch: !!customFetch,
+        hasApiKey: !!options["apiKey"],
+        apiKey: options["apiKey"] ? String(options["apiKey"]).substring(0, 20) + "..." : undefined,
+        baseURL: options["baseURL"],
+      })
+
+      // Include hasCustomFetch in cache key since functions can't be serialized
+      // This ensures SDKs with/without custom fetch are cached separately
+      const key = Bun.hash.xxHash32(JSON.stringify({ npm: model.api.npm, options, hasCustomFetch: !!customFetch }))
       const existing = s.sdk.get(key)
       if (existing) return existing
 
-      const customFetch = options["fetch"]
+      log.info("getSDK customFetch", { hasCustomFetch: !!customFetch })
 
       options["fetch"] = async (input: any, init?: BunFetchRequestInit) => {
         // Preserve custom fetch if it exists, wrap it with timeout logic
@@ -1050,7 +1284,13 @@ export namespace Provider {
         model.providerID === "google-vertex-anthropic" ? "@ai-sdk/google-vertex/anthropic" : model.api.npm
       const bundledFn = BUNDLED_PROVIDERS[bundledKey]
       if (bundledFn) {
-        log.info("using bundled provider", { providerID: model.providerID, pkg: bundledKey })
+        log.info("using bundled provider", {
+          providerID: model.providerID,
+          pkg: bundledKey,
+          hasApiKey: !!options["apiKey"],
+          hasFetch: !!options["fetch"],
+          apiKeyValue: options["apiKey"] ? String(options["apiKey"]).substring(0, 30) : "undefined"
+        })
         const loaded = bundledFn({
           name: model.providerID,
           ...options,

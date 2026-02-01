@@ -5,6 +5,11 @@ All notable changes to BloxyCode will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-01
+
+### Added
+- Built-in Antigravity models now work out of the box - Claude Opus 4.5, Claude Sonnet 4.5, and Gemini 3 Pro/Flash models available under Google provider without user configuration
+
 ## [1.1.1] - 2026-01-31
 
 ### Fixed

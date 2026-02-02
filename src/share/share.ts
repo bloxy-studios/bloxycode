@@ -68,7 +68,7 @@ export namespace Share {
 
   export const URL =
     process.env["BLOXYCODE_API"] ??
-    (Installation.isPreview() || Installation.isLocal() ? "https://api.dev.bloxycode.dev" : "https://api.bloxycode.dev")
+    (Installation.isPreview() || Installation.isLocal() ? "https://api.dev.opencode.ai" : "https://api.opencode.ai")
 
   const disabled = process.env["BLOXYCODE_DISABLE_SHARE"] === "true" || process.env["BLOXYCODE_DISABLE_SHARE"] === "1"
 

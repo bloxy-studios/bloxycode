@@ -1,6 +1,6 @@
 # BloxyCode
 
-[![Version](https://img.shields.io/badge/Version-1.2.1-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
+[![Version](https://img.shields.io/badge/Version-1.2.2-blue?style=for-the-badge)](https://www.npmjs.com/package/@bloxystudios/bloxycode)
 [![Vibeathon 2026](https://img.shields.io/badge/Vibeathon-Feb%202026-purple?style=for-the-badge)](https://www.bridgemind.ai/vibeathon)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Bun](https://img.shields.io/badge/Bun-1.3+-black?style=for-the-badge)](https://bun.sh/)
@@ -262,6 +262,9 @@ Contributions are welcome! Please see our contributing guidelines for more detai
 MIT
 
 ## Changelog
+
+### 1.2.2 - 2026-02-02
+- Revert domain URLs back to opencode.ai - BloxyCode infrastructure not yet available
 
 ### 1.2.1 - 2026-02-02
 - Rebrand serve/web interface from OpenCode to BloxyCode - updated server endpoints, mDNS names, API docs, themes, prompts, and user-facing URLs

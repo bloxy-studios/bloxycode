@@ -109,7 +109,7 @@ export namespace Server {
               if (input.startsWith("http://127.0.0.1:")) return input
               if (input === "tauri://localhost" || input === "http://tauri.localhost") return input
 
-              // *.bloxycode.dev (https only, adjust if needed)
+              // *.opencode.ai (https only, adjust if needed)
               if (/^https:\/\/([a-z0-9-]+\.)*bloxycode\.dev$/.test(input)) {
                 return input
               }
@@ -530,11 +530,11 @@ export namespace Server {
         .all("/*", async (c) => {
           const path = c.req.path
 
-          const response = await proxy(`https://app.bloxycode.dev${path}`, {
+          const response = await proxy(`https://app.opencode.ai${path}`, {
             ...c.req,
             headers: {
               ...c.req.raw.headers,
-              host: "app.bloxycode.dev",
+              host: "app.opencode.ai",
             },
           })
           response.headers.set(

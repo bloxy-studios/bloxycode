@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.2.2] - 2026-02-02
+
+### Fixed
+- Revert domain URLs back to opencode.ai - BloxyCode infrastructure not yet available
+
 ## [1.2.1] - 2026-02-02
 
 ### Changed

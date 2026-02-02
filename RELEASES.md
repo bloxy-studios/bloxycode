@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.2.1] - 2026-02-02
+
+### Changed
+- Rebrand serve/web interface from OpenCode to BloxyCode - updated server endpoints, mDNS names, API docs, themes, prompts, and user-facing URLs
+
 ## [1.2.0] - 2026-02-01
 
 ### Added

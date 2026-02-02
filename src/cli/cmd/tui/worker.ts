@@ -147,6 +147,6 @@ Rpc.listen(rpc)
 function getAuthorizationHeader(): string | undefined {
   const password = Flag.BLOXYCODE_SERVER_PASSWORD
   if (!password) return undefined
-  const username = Flag.BLOXYCODE_SERVER_USERNAME ?? "opencode"
+  const username = Flag.BLOXYCODE_SERVER_USERNAME ?? "bloxycode"
   return `Basic ${btoa(`${username}:${password}`)}`
 }

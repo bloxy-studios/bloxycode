@@ -225,14 +225,14 @@ export namespace LLM {
       headers: {
         ...(input.model.providerID.startsWith("opencode")
           ? {
-              "x-opencode-project": Instance.project.id,
-              "x-opencode-session": input.sessionID,
-              "x-opencode-request": input.user.id,
-              "x-opencode-client": Flag.BLOXYCODE_CLIENT,
+              "x-bloxycode-project": Instance.project.id,
+              "x-bloxycode-session": input.sessionID,
+              "x-bloxycode-request": input.user.id,
+              "x-bloxycode-client": Flag.BLOXYCODE_CLIENT,
             }
           : input.model.providerID !== "anthropic"
             ? {
-                "User-Agent": `opencode/${Installation.VERSION}`,
+                "User-Agent": `bloxycode/${Installation.VERSION}`,
               }
             : undefined),
         ...input.model.headers,

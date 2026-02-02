@@ -483,7 +483,7 @@ function App() {
       title: "Open docs",
       value: "docs.open",
       onSelect: () => {
-        open("https://opencode.ai/docs").catch(() => {})
+        open("https://bloxycode.dev/docs").catch(() => {})
         dialog.clear()
       },
       category: "System",
@@ -590,7 +590,7 @@ function App() {
         DialogAlert.show(
           dialog,
           "Warning",
-          "While openrouter is a convenient way to access LLMs your request will often be routed to subpar providers that do not work well in our testing.\n\nFor reliable access to models check out BloxyCode Zen\nhttps://opencode.ai/zen",
+          "While openrouter is a convenient way to access LLMs your request will often be routed to subpar providers that do not work well in our testing.\n\nFor reliable access to models check out BloxyCode Zen\nhttps://bloxycode.dev/zen",
         ).then(() => kv.set("openrouter_warning", true))
       })
     }
